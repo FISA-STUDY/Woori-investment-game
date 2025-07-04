@@ -12,6 +12,8 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Scanner;
 
+import controller.NewsGenerator;
+
 public class ConsoleUI {
     private static Scanner scanner = new Scanner(System.in);
     private static final NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.KOREA);
@@ -100,6 +102,13 @@ public class ConsoleUI {
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("              💰 미니투자게임 💰               ");
         System.out.println("╚════════════════════════════════════════╝");
+        NewsGenerator news = new NewsGenerator();
+        System.out.println();
+        System.out.println("╔════════════════════════════════════════╗");
+        System.out.println("특보!!!");
+        System.out.println(news.generateNews().getN_message());
+        System.out.println("╚════════════════════════════════════════╝");
+
     }
     
     // 성공 메시지 출력

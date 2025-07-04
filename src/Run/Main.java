@@ -23,11 +23,24 @@ public class Main {
             // 플레이어 정보 출력
             ConsoleUI.displayUserInfo(model.getCurrentPlayer());
             
-            //메인 메뉴 출력
-            ConsoleUI.printMainMenu();
-            
-            //메인 선택 창 출력
-            ConsoleUI.printMenuChoice();
+            boolean isGaming = true;
+            while(isGaming)
+            {
+                int choice = ConsoleUI.printMenuChoice();
+            	switch(choice)
+            	{
+            		case 1:
+            		case 2:
+            		case 3:
+            		case 4:
+            		case 0:
+            			ConsoleUI.printInfo("게임을 종료했습니다 !");
+            			isGaming = false;
+            			break;
+            		default:
+            			ConsoleUI.printError("잘못된 입력입니다.");
+            	}
+            }
             
         } catch (Exception e) {
             ConsoleUI.printError("게임 실행 중 오류가 발생했습니다: " + e.getMessage());
