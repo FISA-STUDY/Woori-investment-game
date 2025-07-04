@@ -27,7 +27,10 @@ public class ConsoleUI {
                 printError("이름을 입력하세요.");
             }
         }
-        
+        System.out.println("────────────────────────────────────────");
+        System.out.println();
+
+
         // Model을 통해 User 객체 생성 (currentPlayer로 자동 설정됨)
         User newUser = model.createNewPlayer(playerName);
         
@@ -39,6 +42,7 @@ public class ConsoleUI {
     }
     //메인 메뉴 상태 출력
     public static void printMainMenu() {
+        System.out.println();
         System.out.println("📋 메인 메뉴");
         System.out.println("1. 📊 주식 시장 보기");
         System.out.println("2. 💳 주식 매매");
@@ -47,9 +51,26 @@ public class ConsoleUI {
         System.out.println("0. 🚪 게임 종료");
         System.out.println();
     }
-    
+   
+    public static int printMenuChoice() {
+    	while(true) {
+    		try {
+        		printPrompt("메뉴를 선택하세요 (0-4)");
+    			int choice = Integer.parseInt(scanner.nextLine());
+    			if(choice >= 0 && choice <= 4)
+    			{
+    				return choice;
+    			}else {
+    				printError("0-3 사이의 숫자를 입력하세요.");
+    			}
+    		}catch(NumberFormatException e) {
+    				printError("숫자를 입력하세요.");
+    			}  			
+    		}
+    }
     // 사용자 정보 출력
     public static void displayUserInfo(User user) {
+    	System.out.println();
         System.out.println("👤 플레이어 정보");
         System.out.println("────────────────────────────────────────");
         System.out.println("이름: " + user.getU_name());

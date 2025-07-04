@@ -25,7 +25,9 @@ public class Main {
             
             //메인 메뉴 출력
             ConsoleUI.printMainMenu();
-               
+            
+            //메인 선택 창 출력
+            ConsoleUI.printMenuChoice();
             
         } catch (Exception e) {
             ConsoleUI.printError("게임 실행 중 오류가 발생했습니다: " + e.getMessage());
