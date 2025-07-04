@@ -22,9 +22,11 @@ public class StockManager {
     		  if(n.getN_isGood()) {
     			  double rate = ((Math.random())*2/10);// 현 주식가격*(1+0~0.2)
     			  stock.setS_price((int)(stock.getS_price()*(1+rate)));
+    			  stock.setS_graph(rate);
     		  } else {
     			  double rate = ((Math.random())*2/10);// 현 주식가격*(1+0~0.2)
     			  stock.setS_price((int)(stock.getS_price()*(1-rate)));
+    			  stock.setS_graph(rate);
     		  	}
     		  } else {
     			  double rate = ((Math.random())*2/10); //-0.2 ~ 0.2 
