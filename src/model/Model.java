@@ -38,5 +38,31 @@ public class Model {
         this.currentPlayer = user;
     }
     
+    /**
+     * 현재 게임 날짜
+     */
+    private int currentDay = 1;
+
+    /**
+     * 게임 날짜 증가
+     */
+    public void incrementDay() {
+        this.currentDay++;
+    }
+
+    /**
+     * 현재 게임 날짜 반환
+     */
+    public int getCurrentDay() {
+        return currentDay;
+    }
+
+    /**
+     * 게임 날짜 설정
+     */
+    public void setCurrentDay(int day) {
+        this.currentDay = day;
+    }
+    
     
 }
