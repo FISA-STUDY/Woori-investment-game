@@ -34,17 +34,39 @@ public class StockManager {
       }
    }
 
-   public static boolean stockBuy(Stock stock,int num) {
-	   if(model.getCurrentPlayer().getU_wallet() >= stock.getS_price()*num) {
-		   model.getCurrentPlayer().setU_wallet((model.getCurrentPlayer().getU_wallet() - stock.getS_price()*num));
-		   return true;
-	   } else {
-		   return false;
+//   public static boolean stockBuy(Stock stock,int num) {
+//	   if(model.getCurrentPlayer().getU_wallet() >= stock.getS_price()*num) {
+//		   model.getCurrentPlayer().setU_wallet((model.getCurrentPlayer().getU_wallet() - stock.getS_price()*num));
+//		   return true;
+//	   } else {
+//		   return false;
+//	   }
+//   }
+   
+   public static boolean stockBuy(String stockName,int num) {
+	   
+	   for(Stock stock:stmodel.getStock() ) {
+		   if(stockName.equals(stock.getS_name())){
+			   if(model.getCurrentPlayer().getU_wallet() >= stock.getS_price()*num) {
+				   model.getCurrentPlayer().setU_wallet((model.getCurrentPlayer().getU_wallet() - stock.getS_price()*num));
+				   return true;
+			   } else {
+				   return false;
+			   }
+		   } else {
+			   return false;
+		   }
 	   }
+	   return false;
    }
    
-   public static void stockSell(Stock stock,int num) {
-	   model.getCurrentPlayer().setU_wallet((model.getCurrentPlayer().getU_wallet() + stock.getS_price()*num));
+   public static void stockSell(String stockName,int num) {
+	   
+	   for(Stock stock:stmodel.getStock() ) {
+		   if(stockName.equals(stock.getS_name())) {
+			   model.getCurrentPlayer().setU_wallet((model.getCurrentPlayer().getU_wallet() + stock.getS_price()*num));
+		   }
+	   }
    }
    
    public static Stock[] showstocks() {
