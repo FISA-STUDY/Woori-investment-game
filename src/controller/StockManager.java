@@ -13,12 +13,24 @@ public class StockManager {
 	private static StockModel stmodel = StockModel.getModel();
 	private static Model model = Model.getModel();
 
-   public static void priceChange() {
+   public static void priceChange(News n) {
 	   
       for(Stock stock:stmodel.getStock()) {
-          double rate = (4*(Math.random()-2)/10); //-0.2 ~ 0.2 
-          int change = (int)(stock.getS_price()*(1+rate));
-          stock.setS_price(change);
+    	  
+    	  
+    	  if(n.getS_name().equals(stock.getS_name())) {
+    		  if(n.getN_isGood()) {
+    			  double rate = ((Math.random())*2/10);// 현 주식가격*(1+0~0.2)
+    			  stock.setS_price((int)(stock.getS_price()*(1+rate)));
+    		  } else {
+    			  double rate = ((Math.random())*2/10);// 현 주식가격*(1+0~0.2)
+    			  stock.setS_price((int)(stock.getS_price()*(1-rate)));
+    		  	}
+    		  } else {
+    			  double rate = ((Math.random())*2/10); //-0.2 ~ 0.2 
+    			  int change = (int)(stock.getS_price()*(1+rate));
+    			  stock.setS_price(change);
+    	  }
       }
    }
 
