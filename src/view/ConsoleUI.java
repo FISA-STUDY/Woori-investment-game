@@ -1,6 +1,8 @@
 package view;
 
-import model.domain.Stock;
+
+//mport model.domain.Stock;
+import model.Model;
 import model.domain.User;
 import model.StockModel;
 import model.StockDatabase;
@@ -13,23 +15,15 @@ import java.util.Scanner;
 public class ConsoleUI {
     private static Scanner scanner = new Scanner(System.in);
     private static final NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.KOREA);
+    private static Model model = Model.getModel(); // Model 인스턴스
     
-    private static StockModel sm = new StockModel();
-    
-    
-    public static void showStocks() {
-    	for(Stock s : sm.getStock()) {
-    		System.out.println(s.getS_name()+" | "+s.getS_price());
-    	}
-    }
-    
+
     
     // 게임 시작 - 플레이어 생성
     public static User createPlayer() {
         printTitle();
         System.out.println();
         System.out.println("🎮 미니투자게임에 오신 것을 환영합니다!");
-        System.out.println("💰 초기 자산 100만원으로 투자를 시작하세요!");
         System.out.println();
         
         String playerName = "";
@@ -41,47 +35,50 @@ public class ConsoleUI {
                 printError("이름을 입력하세요.");
             }
         }
-        
-        // User 객체 생성 (초기 자산 100만원)
-        User newUser = new User(playerName, 1000000);
+        System.out.println("────────────────────────────────────────");
+        System.out.println();
+
+
+        // Model을 통해 User 객체 생성 (currentPlayer로 자동 설정됨)
+        User newUser = model.createNewPlayer(playerName);
         
         printSuccess("환영합니다, " + playerName + "님!");
-        System.out.println("💰 초기 자산: " + formatCurrency(1000000));
+        System.out.println("💰 초기 자산: " + formatCurrency(newUser.getU_wallet()));
         System.out.println();
-        pauseScreen();
         
         return newUser;
     }
-    
     //메인 메뉴 상태 출력
     public static void printMainMenu() {
+        System.out.println();
         System.out.println("📋 메인 메뉴");
         System.out.println("1. 📊 주식 시장 보기");
         System.out.println("2. 💳 주식 매매");
         System.out.println("3. 📈 포트폴리오 보기");
+        System.out.println("4. 📈 다음날로 넘어가기");
         System.out.println("0. 🚪 게임 종료");
         System.out.println();
     }
    
-    //메뉴선택 입력받기
-    public static int getMenuChoice() {
-        while(true) {
-            printPrompt("메뉴를 선택하세요 (0-3)");
-            try {
-                int choice = Integer.parseInt(scanner.nextLine());
-                if(choice >= 0 && choice <= 3) {
-                    return choice;
-                } else {
-                    printError("0-3 사이의 숫자를 입력하세요.");
-                }
-            } catch(NumberFormatException e) {
-                printError("숫자를 입력하세요.");
-            }
-        }
+    public static int printMenuChoice() {
+    	while(true) {
+    		try {
+        		printPrompt("메뉴를 선택하세요 (0-4)");
+    			int choice = Integer.parseInt(scanner.nextLine());
+    			if(choice >= 0 && choice <= 4)
+    			{
+    				return choice;
+    			}else {
+    				printError("0-3 사이의 숫자를 입력하세요.");
+    			}
+    		}catch(NumberFormatException e) {
+    				printError("숫자를 입력하세요.");
+    			}  			
+    		}
     }
-        
     // 사용자 정보 출력
     public static void displayUserInfo(User user) {
+    	System.out.println();
         System.out.println("👤 플레이어 정보");
         System.out.println("────────────────────────────────────────");
         System.out.println("이름: " + user.getU_name());
@@ -89,13 +86,6 @@ public class ConsoleUI {
         System.out.println();
     }
     
-    // 자산 부족 경고
-    public static void warnInsufficientFunds(User user, int requiredAmount) {
-        printError("자산이 부족합니다!");
-        System.out.println("필요 금액: " + formatCurrency(requiredAmount));
-        System.out.println("보유 자산: " + formatCurrency(user.getU_wallet()));
-        System.out.println("부족 금액: " + formatCurrency(requiredAmount - user.getU_wallet()));
-    }
     
     // 게임 상태 헤더 출력
     public static void printGameStatus(int day, User user) {
@@ -142,18 +132,5 @@ public class ConsoleUI {
     // 돈 형식으로 포맷팅
     public static String formatCurrency(int amount) {
         return currencyFormat.format(amount) + "원";
-    }
-    
-    // 일시정지 (Enter 키 대기)
-    public static void pauseScreen() {
-        System.out.println("📋 계속하려면 Enter를 누르세요...");
-        try {
-            System.in.read();
-            while (System.in.available() > 0) {
-                System.in.read();
-            }
-        } catch (Exception e) {
-            // 예외 처리
-        }
     }
 }
