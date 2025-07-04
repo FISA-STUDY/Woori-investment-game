@@ -1,6 +1,7 @@
 package view;
 
 import model.Model;
+import model.StockDatabase;
 import model.domain.Stock;
 import model.domain.User;
 
@@ -65,7 +66,7 @@ public class ConsoleUI {
 	        String price = String.format("%-18s", formatCurrency(s.getS_price()));
 	        
 	        // 그래프는 그대로
-	        double graph = s.getS_graph();
+	        String graph = s.getS_graph();
 	        
 	        System.out.printf("%-20s %-20s %s%n", stockName, price, graph);
 	    }
@@ -107,6 +108,45 @@ public class ConsoleUI {
         }
     }
     
+    //메인 메뉴 상태 출력
+    public static void printMainMenu2() {
+        System.out.println();
+        System.out.println("📋 메인 메뉴");
+        System.out.println("1. 💳 주식 매수");
+        System.out.println("2. 📈 주식 매도");
+        System.out.println("0. 🚪 뒤로 가기");
+        System.out.println();
+    }
+    
+    public static int printMenuChoice2() {
+        while(true) {
+            try {
+                printPrompt("메뉴를 선택하세요 (0-2)");
+                int choice = Integer.parseInt(scanner.nextLine());
+                if(choice >= 0 && choice <= 2) {
+                	if(choice == 1)
+                	{
+                		System.out.println("구입하실 종목과 개수를 입력하세요(중간은 공백으로 구분합니다.)");
+                		String[] input = scanner.nextLine().split(" ");
+                		
+                		String stockName = input[0];
+                		int quantity;
+                		
+                		try {
+                			quantity = Integer.parseInt(input[1]);
+                			if(StockDatabase.getStocks())
+                		}
+                	}
+                } else {
+                    printError("0-2 사이의 숫자를 입력하세요.");
+                }
+            } catch(NumberFormatException e) {
+                printError("숫자를 입력하세요.");
+            }
+        }
+    }
+    
+   
     // 사용자 정보 출력
     public static void displayUserInfo(User user) {
         System.out.println();
