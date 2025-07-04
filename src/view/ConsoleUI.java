@@ -14,7 +14,7 @@ public class ConsoleUI {
         printTitle();
         System.out.println();
         System.out.println("🎮 미니투자게임에 오신 것을 환영합니다!");
-        System.out.println("💰 초기 자산 1,000만원으로 투자를 시작하세요!");
+        System.out.println("💰 초기 자산 100만원으로 투자를 시작하세요!");
         System.out.println();
         
         String playerName = "";
@@ -27,11 +27,11 @@ public class ConsoleUI {
             }
         }
         
-        // User 객체 생성 (초기 자산 1000만원)
-        User newUser = new User(playerName, 10000000);
+        // User 객체 생성 (초기 자산 100만원)
+        User newUser = new User(playerName, 1000000);
         
         printSuccess("환영합니다, " + playerName + "님!");
-        System.out.println("💰 초기 자산: " + formatCurrency(10000000));
+        System.out.println("💰 초기 자산: " + formatCurrency(1000000));
         System.out.println();
         pauseScreen();
         
@@ -47,19 +47,6 @@ public class ConsoleUI {
         System.out.println();
     }
     
-    // 사용자 자산 업데이트 후 알림
-    public static void notifyWalletUpdate(User user, int previousAmount) {
-        int difference = user.getU_wallet() - previousAmount;
-        
-        if (difference > 0) {
-            printSuccess("💰 자산이 " + formatCurrency(difference) + " 증가했습니다!");
-        } else if (difference < 0) {
-            printWarning("💸 자산이 " + formatCurrency(Math.abs(difference)) + " 감소했습니다.");
-        }
-        
-        System.out.println("현재 보유 자산: " + formatCurrency(user.getU_wallet()));
-    }
-    
     // 자산 부족 경고
     public static void warnInsufficientFunds(User user, int requiredAmount) {
         printError("자산이 부족합니다!");
@@ -68,10 +55,18 @@ public class ConsoleUI {
         System.out.println("부족 금액: " + formatCurrency(requiredAmount - user.getU_wallet()));
     }
     
+    // 게임 상태 헤더 출력
+    public static void printGameStatus(int day, User user) {
+        System.out.println("============================================================");
+        System.out.printf("📅 %d일차 | 👤 %s | 💰 %s원%n", 
+                         day, user.getU_name(), formatCurrency(user.getU_wallet()));
+        System.out.println("============================================================");
+    }
+    
     // 게임 타이틀
     public static void printTitle() {
         System.out.println("╔════════════════════════════════════════╗");
-        System.out.println("║          💰 미니투자게임 💰            ║");
+        System.out.println("              💰 미니투자게임 💰               ");
         System.out.println("╚════════════════════════════════════════╝");
     }
     
