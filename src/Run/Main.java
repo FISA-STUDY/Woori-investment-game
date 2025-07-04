@@ -11,7 +11,8 @@ public class Main {
 		
 		//플레이어 정보
 		ConsoleUI.createPlayer();
-		ConsoleUI.printGameStatus(1, player);
+        int currentDay = 1;
+		ConsoleUI.printGameStatus(currentDay, player);
 		
 		
 	}
