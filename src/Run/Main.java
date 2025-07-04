@@ -30,6 +30,8 @@ public class Main {
             	switch(choice)
             	{
             		case 1:
+            			ConsoleUI.printStocks();
+            			break;
             		case 2:
             		case 3:
             		case 4:

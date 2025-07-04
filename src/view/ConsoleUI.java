@@ -3,6 +3,7 @@ package view;
 
 //mport model.domain.Stock;
 import model.Model;
+import model.domain.Stock;
 import model.domain.User;
 import model.StockModel;
 import model.StockDatabase;
@@ -13,13 +14,13 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import controller.NewsGenerator;
+import controller.StockManager;
 
 public class ConsoleUI {
     private static Scanner scanner = new Scanner(System.in);
     private static final NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.KOREA);
     private static Model model = Model.getModel(); // Model 인스턴스
-    
-
+    private static StockManager stockManager = new StockManager();
     
     // 게임 시작 - 플레이어 생성
     public static User createPlayer() {
@@ -50,6 +51,17 @@ public class ConsoleUI {
         
         return newUser;
     }
+    
+    public static void printStocks() {
+        System.out.println("╔════════════════════════════════════════╗");
+
+    	for(Stock s : stockManager.showstocks())
+    	{
+    		System.out.println(s.getS_name()+"  |  "+s.getS_price()+"  |  " + s.getS_graph());
+    	}
+        System.out.println("╚════════════════════════════════════════╝");
+    }
+    
     //메인 메뉴 상태 출력
     public static void printMainMenu() {
         System.out.println();

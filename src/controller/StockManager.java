@@ -34,7 +34,7 @@ public class StockManager {
       }
    }
 
-   public static boolean StockBuy(Stock stock,int num) {
+   public static boolean stockBuy(Stock stock,int num) {
 	   if(model.getCurrentPlayer().getU_wallet() >= stock.getS_price()*num) {
 		   model.getCurrentPlayer().setU_wallet((model.getCurrentPlayer().getU_wallet() - stock.getS_price()*num));
 		   return true;
@@ -43,8 +43,12 @@ public class StockManager {
 	   }
    }
    
-   public static void StockSell(Stock stock,int num) {
+   public static void stockSell(Stock stock,int num) {
 	   model.getCurrentPlayer().setU_wallet((model.getCurrentPlayer().getU_wallet() + stock.getS_price()*num));
+   }
+   
+   public static Stock[] showstocks() {
+	   return stmodel.getStock();
    }
 
 }
