@@ -14,6 +14,9 @@ public class Main {
         int currentDay = 1;
 		ConsoleUI.printGameStatus(currentDay, player);
 		
+		ConsoleUI.printMainMenu();
+		ConsoleUI.getMenuChoice();
+		
 		
 	}
 }

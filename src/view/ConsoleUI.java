@@ -38,6 +38,33 @@ public class ConsoleUI {
         return newUser;
     }
     
+    //메인 메뉴 상태 출력
+    public static void printMainMenu() {
+        System.out.println("📋 메인 메뉴");
+        System.out.println("1. 📊 주식 시장 보기");
+        System.out.println("2. 💳 주식 매매");
+        System.out.println("3. 📈 포트폴리오 보기");
+        System.out.println("0. 🚪 게임 종료");
+        System.out.println();
+    }
+   
+    //메뉴선택 입력받기
+    public static int getMenuChoice() {
+        while(true) {
+            printPrompt("메뉴를 선택하세요 (0-3)");
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+                if(choice >= 0 && choice <= 3) {
+                    return choice;
+                } else {
+                    printError("0-3 사이의 숫자를 입력하세요.");
+                }
+            } catch(NumberFormatException e) {
+                printError("숫자를 입력하세요.");
+            }
+        }
+    }
+        
     // 사용자 정보 출력
     public static void displayUserInfo(User user) {
         System.out.println("👤 플레이어 정보");
