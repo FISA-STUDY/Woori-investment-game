@@ -10,22 +10,29 @@ import model.StockDatabase;
 
 public class StockManager {
 	
-	private static Model stmodel = Model.getModel();
+	private static StockModel stmodel = StockModel.getModel();
+	private static Model model = Model.getModel();
 
-   public static int priceChange(Stock stock) {
-      double rate = (4*(Math.random()-2)/10); //-0.2 ~ 0.2 
-      int change = (int)(stock.getS_price()*(1+rate));
-      stock.setS_price(change);
-      return change;
+   public static void priceChange() {
+	   
+      for(Stock stock:stmodel.getStock()) {
+          double rate = (4*(Math.random()-2)/10); //-0.2 ~ 0.2 
+          int change = (int)(stock.getS_price()*(1+rate));
+          stock.setS_price(change);
+      }
    }
 
-   public static void StockBuy(Stock stock,int num) {
-	   //set(get u_wallet - stock.getS_price*num);
+   public static boolean StockBuy(Stock stock,int num) {
+	   if(model.getCurrentPlayer().getU_wallet() >= stock.getS_price()*num) {
+		   model.getCurrentPlayer().setU_wallet((model.getCurrentPlayer().getU_wallet() - stock.getS_price()*num));
+		   return true;
+	   } else {
+		   return false;
+	   }
    }
    
    public static void StockSell(Stock stock,int num) {
-	   //set(get u_wallet + stock.getS_price*num)
-      
+	   model.getCurrentPlayer().setU_wallet((model.getCurrentPlayer().getU_wallet() + stock.getS_price()*num));
    }
 
 }
