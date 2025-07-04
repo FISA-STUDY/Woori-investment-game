@@ -1,6 +1,11 @@
 package view;
 
+import model.domain.Stock;
 import model.domain.User;
+import model.StockModel;
+import model.StockDatabase;
+
+
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Scanner;
@@ -8,6 +13,16 @@ import java.util.Scanner;
 public class ConsoleUI {
     private static Scanner scanner = new Scanner(System.in);
     private static final NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.KOREA);
+    
+    private static StockModel sm = new StockModel();
+    
+    
+    public static void showStocks() {
+    	for(Stock s : sm.getStock()) {
+    		System.out.println(s.getS_name()+" | "+s.getS_price());
+    	}
+    }
+    
     
     // 게임 시작 - 플레이어 생성
     public static User createPlayer() {
@@ -101,6 +116,8 @@ public class ConsoleUI {
     public static void printSuccess(String message) {
         System.out.println("✅ " + message);
     }
+    
+
     
     // 에러 메시지 출력
     public static void printError(String message) {
