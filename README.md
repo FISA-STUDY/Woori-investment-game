@@ -12,8 +12,8 @@
 실제 주식 시장을 모방한 투자 시뮬레이션 게임으로, 가상의 자금으로 주식을 매수/매도하며 수익을 극대화하는 것이 목표입니다.
 
 ## 📊 ERD
+<img width="892" alt="스크린샷 2025-07-04 오후 12 37 48" src="https://github.com/user-attachments/assets/08f12ec9-755c-4fa3-8d70-152b7b4a8baf" />
 
-![ERD](https://github.com/user-attachments/assets/fdaa7992-3d8c-4133-8055-f51a1eef32e7)
 
 ## 🚀 주요 기능
 
