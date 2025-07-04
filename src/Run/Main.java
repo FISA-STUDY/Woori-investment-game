@@ -1,5 +1,4 @@
 package Run;
-
 import model.domain.User;
 import view.ConsoleUI;
 import model.Model;
@@ -24,24 +23,58 @@ public class Main {
             ConsoleUI.displayUserInfo(model.getCurrentPlayer());
             
             boolean isGaming = true;
-            while(isGaming)
-            {
+            while(isGaming) {
+                // 메인 메뉴 출력
+                ConsoleUI.printMainMenu();
+                
                 int choice = ConsoleUI.printMenuChoice();
-            	switch(choice)
-            	{
-            		case 1:
-            			ConsoleUI.printStocks();
-            			break;
-            		case 2:
-            		case 3:
-            		case 4:
-            		case 0:
-            			ConsoleUI.printInfo("게임을 종료했습니다 !");
-            			isGaming = false;
-            			break;
-            		default:
-            			ConsoleUI.printError("잘못된 입력입니다.");
-            	}
+                switch(choice) {
+                    case 1:
+                        // 주식 시장 보기
+                        System.out.println("\n📊 주식 시장 현황");
+                        ConsoleUI.printStocks();
+                        break;
+                        
+                    case 2:
+                        break;
+                        
+                    case 3:
+                        break;
+                        
+                    case 4:
+                        // 다음날로 넘어가기
+                        ConsoleUI.nextDay();
+                        currentDay++;
+                        
+                        // 게임 상태 헤더 업데이트
+                        ConsoleUI.printGameStatus(currentDay, model.getCurrentPlayer());
+                        
+                        // 업데이트된 플레이어 정보 출력
+                        ConsoleUI.displayUserInfo(model.getCurrentPlayer());
+                        break;
+                        
+                    case 0:
+                        // 게임 종료
+                        System.out.println();
+                        ConsoleUI.printInfo("게임을 종료합니다. 수고하셨습니다!");
+                        System.out.println();
+                        ConsoleUI.printSuccess("최종 게임 결과:");
+                        System.out.println("────────────────────────────────────────");
+                        System.out.println("📅 플레이 일수: " + currentDay + "일");
+                        System.out.println("👤 플레이어: " + model.getCurrentPlayer().getU_name());
+                        System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getU_wallet()));
+                        System.out.println();
+                        isGaming = false;
+                        break;
+                        
+                    default:
+                        ConsoleUI.printError("잘못된 입력입니다.");
+                }
+                
+                // 게임이 계속되는 경우 구분선 출력
+                if(isGaming && choice != 0) {
+                    System.out.println("\n" + "=".repeat(60));
+                }
             }
             
         } catch (Exception e) {
