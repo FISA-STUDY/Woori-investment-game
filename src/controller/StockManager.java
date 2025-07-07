@@ -73,16 +73,11 @@ public class StockManager {
         
         User currentPlayer = model.getCurrentPlayer();
         
-        // TODO: 사용자가 충분한 주식을 보유하고 있는지 확인
-        // if (!currentPlayer.hasEnoughStocks(stockName, num)) {
-        //     return false;
-        // }
-        
         int totalValue = targetStock.getS_price() * num;
         currentPlayer.setU_wallet(currentPlayer.getU_wallet() + totalValue);
         
         // TODO: 사용자 포트폴리오에서 주식 제거
-        // currentPlayer.removeFromPortfolio(stockName, num);
+        marketManager.sellStock(targetStock, num);
         
         return true;
     }
