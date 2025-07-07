@@ -59,10 +59,16 @@ public class Model {
     public void setCurrentDay(int day) {
         this.currentDay = day;
     }
+<<<<<<< HEAD
     
     public List<PortFolio> getPortFolios() {
         return db.getPortFolios();
     }
 
+=======
+    public  List<PortFolio> getPortFolios(){
+        return db.getPortFolios();
+     }
+>>>>>>> 3708f6f42d762e0f2860868d1f3ee87adfd95f93
     
 }

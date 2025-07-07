@@ -1,8 +1,15 @@
 package model;
 
 import model.domain.News;
+<<<<<<< HEAD
 
 import java.util.ArrayList;
+=======
+import model.domain.PortFolio;
+
+import java.util.ArrayList;
+import java.util.List;
+>>>>>>> 3708f6f42d762e0f2860868d1f3ee87adfd95f93
 import java.util.Random;
 import java.util.List;
 
@@ -10,6 +17,7 @@ import java.util.List;
 public class Database {
     private static News[] news; // 실체화 되는 시점 : 객체 생성시점
     private static Random random = new Random();
+    private static List<PortFolio> portfolios;
     
     // byte code가 메모리에 로딩될 때 읽혀지는 시점에 실행
     static {
@@ -36,8 +44,7 @@ public class Database {
         return news[randomIndex];
     }
     
-    private List<PortFolio> portfolios = new ArrayList<>();
-    public List<PortFolio> getPortFolios(){
+    public static List<PortFolio> getPortFolios(){
        return portfolios;
     }
         

@@ -10,6 +10,7 @@ import model.StockDatabase;
 public class StockManager {
     
     private static StockModel stmodel = StockModel.getModel();
+    private static MarketManager marketManager = new MarketManager();
     private static Model model = Model.getModel();
     
     public static void priceChange(News n) {
@@ -53,7 +54,7 @@ public class StockManager {
         if (currentPlayer.getU_wallet() >= totalCost) {
             currentPlayer.setU_wallet(currentPlayer.getU_wallet() - totalCost);
             targetStock.setS_amount(targetStock.getS_amount()-num);
-            
+            marketManager.buyStock(targetStock,num);
             return true;
         }
         
