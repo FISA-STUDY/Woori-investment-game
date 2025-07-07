@@ -20,18 +20,18 @@ public class StockManager {
             if(n.getS_name().equals(stock.getS_name())) {
                 // 뉴스에 언급된 주식
                 if(n.getN_isGood()) {
-                    rate = Math.random() * 0.2; 
+                    rate = Math.random() * 0.2; // 0 ~ 0.2 (상승)
                     stock.setS_price((int)(stock.getS_price() * (1 + rate)));
                     System.out.println("📈 " + stock.getS_name() + " 주가 상승: +" + String.format("%.1f", rate * 100) + "%");
                 } else {
-                    rate = Math.random() * 0.2; 
+                    rate = Math.random() * 0.2; // 0 ~ 0.2 (하락)
                     stock.setS_price((int)(stock.getS_price() * (1 - rate)));
                     System.out.println("📉 " + stock.getS_name() + " 주가 하락: -" + String.format("%.1f", rate * 100) + "%");
                 }
                 stock.setS_graph(rate);
             } else {
                 // 다른 주식들의 소폭 랜덤 변동
-                rate = (Math.random() - 0.5) * 0.1; 
+                rate = (Math.random() - 0.5) * 0.1; // -0.05 ~ 0.05
                 stock.setS_price((int)(stock.getS_price() * (1 + rate)));
                 stock.setS_graph(Math.abs(rate));
             }
@@ -64,19 +64,24 @@ public class StockManager {
     public static boolean stockSell(String stockName, int num) {
         if (num <= 0) {
             return false;
+            
         }
         
         Stock targetStock = findStockByName(stockName);
+        boolean isSuccess = marketManager.sellStock(targetStock, num);
         if (targetStock == null) {
             return false;
         }
-        
-        User currentPlayer = model.getCurrentPlayer();
-        
-        int totalValue = targetStock.getS_price() * num;
-        currentPlayer.setU_wallet(currentPlayer.getU_wallet() + totalValue);
-        
-        return true;
+        if(isSuccess) {
+        	 User currentPlayer = model.getCurrentPlayer();
+             
+             int totalValue = targetStock.getS_price() * num;
+             currentPlayer.setU_wallet(currentPlayer.getU_wallet() + totalValue);
+        }else {
+        	return false;
+        }
+        return false;
+       
     }
     
     // 주식 이름으로 찾기 헬퍼 메서드

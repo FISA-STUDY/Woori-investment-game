@@ -441,6 +441,10 @@ public class ConsoleUI {
             System.out.println("보유한 주식이 없습니다.");
         }
         
+        System.out.println("💰 총 자산: " + formatCurrency(currentPlayer.getU_wallet()));
+        System.out.printf("  %-18s  %-12s  %-10s", "📈 종목명", "💰 평단가", "📦 수량");
+        System.out.println();
+        model.getPortFolios().forEach(p ->System.out.printf("  %-18s  %-12d  %-10d", p.getP_name(),p.getP_price(),p.getP_amount()));;
         System.out.println();
         printPrompt("계속하려면 Enter를 누르세요");
         scanner.nextLine();
