@@ -90,9 +90,9 @@
 ## ⚙️ 설치 및 실행
 
 ### 📋 사전 요구사항
-![JDK](https://img.shields.io/badge/JDK-8+-007396?style=plastic&logo=java&logoColor=white)
+![JDK](https://img.shields.io/badge/JDK-17+-007396?style=plastic&logo=java&logoColor=white)
 
-- Java JDK 8 이상
+- Java JDK 17 이상
 
 ### 🔧 실행 방법
 
