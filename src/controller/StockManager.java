@@ -64,25 +64,23 @@ public class StockManager {
     public static boolean stockSell(String stockName, int num) {
         if (num <= 0) {
             return false;
-            
         }
-        
+
         Stock targetStock = findStockByName(stockName);
-        boolean isSuccess = marketManager.sellStock(targetStock, num);
         if (targetStock == null) {
             return false;
         }
-        if(isSuccess) {
-        	 User currentPlayer = model.getCurrentPlayer();
-             
-             int totalValue = targetStock.getS_price() * num;
-             currentPlayer.setU_wallet(currentPlayer.getU_wallet() + totalValue);
-        }else {
-        	return false;
+
+        boolean isSuccess = marketManager.sellStock(targetStock, num);
+        if (isSuccess) {
+            User currentPlayer = model.getCurrentPlayer();
+            int totalValue = targetStock.getS_price() * num;
+            currentPlayer.setU_wallet(currentPlayer.getU_wallet() + totalValue);
+            return true;
         }
         return false;
-       
     }
+
     
     // 주식 이름으로 찾기 헬퍼 메서드
     private static Stock findStockByName(String stockName) {
