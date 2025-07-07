@@ -207,7 +207,8 @@ public class ConsoleUI {
     
     // 주식 매도 메뉴
     public static void sellStockMenu() {
-        System.out.println();
+    	 
+    	System.out.println();
         System.out.println("📈 주식 매도");
         System.out.println("────────────────────────────────────────");
         
@@ -235,6 +236,19 @@ public class ConsoleUI {
                     continue;
                 }
                 
+                int ownedQuantity = getOwnedStockQuantity(tradeInfo.stockName);
+                if (ownedQuantity == 0) {
+                    printError("해당 주식을 보유하고 있지 않습니다.");
+                    continue;
+                }
+                
+                if (tradeInfo.quantity > ownedQuantity) {
+                    printError("보유 수량이 부족합니다.");
+                    System.out.println("요청 수량: " + tradeInfo.quantity + "주");
+                    System.out.println("보유 수량: " + ownedQuantity + "주");
+                    continue;
+                }
+                
                 // 매도 정보 표시
                 Stock targetStock = StockManager.getStockByName(tradeInfo.stockName);
                 if (targetStock != null) {
@@ -250,7 +264,7 @@ public class ConsoleUI {
                 }
                 
                 // 매도 확인
-                if (confirmTransaction("판매")) {
+                if (confirmTransaction("판매")) {                	
                     if(StockManager.stockSell(tradeInfo.stockName, tradeInfo.quantity)) {
                         printSuccess("주식 판매가 완료되었습니다!");
                         System.out.println("현재 자산: " + formatCurrency(model.getCurrentPlayer().getU_wallet()));
