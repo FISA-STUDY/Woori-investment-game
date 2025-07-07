@@ -64,6 +64,7 @@ public class StockManager {
     public static boolean stockSell(String stockName, int num) {
         if (num <= 0) {
             return false;
+            
         }
         
         Stock targetStock = findStockByName(stockName);

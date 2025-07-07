@@ -302,7 +302,9 @@ public class ConsoleUI {
         
         User currentPlayer = model.getCurrentPlayer();
         System.out.println("💰 총 자산: " + formatCurrency(currentPlayer.getU_wallet()));
-        model.getPortFolios().forEach(p -> System.out.print("보유한 주식 "+p.getP_name()+"|"+p.getP_amount()+"|"+p.getP_price()));;
+        System.out.printf("  %-18s  %-12s  %-10s", "📈 종목명", "💰 평단가", "📦 수량");
+        System.out.println();
+        model.getPortFolios().forEach(p ->System.out.printf("  %-18s  %-12d  %-10d", p.getP_name(),p.getP_price(),p.getP_amount()));;
         System.out.println();
         System.out.println();             
         printPrompt("계속하려면 Enter를 누르세요");

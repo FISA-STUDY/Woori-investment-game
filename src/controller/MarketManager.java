@@ -69,6 +69,8 @@ public class MarketManager {
        return currentPlayer.getU_wallet() + calculateTotalPortfolioValue();
    }
    
-   
+   public static List<PortFolio> showPortfolio(){
+	   return portfolios;
+   }
    
 }
