@@ -1,7 +1,11 @@
 package model;
 
 import model.domain.News;
+
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.List;
+
 
 public class Database {
     private static News[] news; // 실체화 되는 시점 : 객체 생성시점
