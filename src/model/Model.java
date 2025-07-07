@@ -1,6 +1,9 @@
 package model;
 
+import java.util.List;
+
 import model.domain.News;
+import model.domain.PortFolio;
 import model.domain.User;
 
 public class Model {
@@ -54,6 +57,8 @@ public class Model {
     public void setCurrentDay(int day) {
         this.currentDay = day;
     }
-    
+    public  List<PortFolio> getPortFolios(){
+        return db.getPortFolios();
+     }
     
 }
