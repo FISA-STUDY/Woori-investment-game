@@ -7,72 +7,105 @@ import model.domain.Stock;
 import model.Model;
 import model.StockDatabase;
 
-
 public class StockManager {
-	
-	private static StockModel stmodel = StockModel.getModel();
-	private static Model model = Model.getModel();
-
-   public static void priceChange(News n) {
-	   
-      for(Stock stock:stmodel.getStock()) {
-    	  
-    	  
-    	  if(n.getS_name().equals(stock.getS_name())) {
-    		  if(n.getN_isGood()) {
-    			  double rate = ((Math.random())*2/10);// 현 주식가격*(1+0~0.2)
-    			  stock.setS_price((int)(stock.getS_price()*(1+rate)));
-    			  stock.setS_graph(rate);
-    		  } else {
-    			  double rate = ((Math.random())*2/10);// 현 주식가격*(1+0~0.2)
-    			  stock.setS_price((int)(stock.getS_price()*(1-rate)));
-    			  stock.setS_graph(rate);
-    		  	}
-    		  } else {
-    			  double rate = ((Math.random())*2/10); //-0.2 ~ 0.2 
-    			  int change = (int)(stock.getS_price()*(1+rate));
-    			  stock.setS_price(change);
-    	  }
-      }
-   }
-
-//   public static boolean stockBuy(Stock stock,int num) {
-//	   if(model.getCurrentPlayer().getU_wallet() >= stock.getS_price()*num) {
-//		   model.getCurrentPlayer().setU_wallet((model.getCurrentPlayer().getU_wallet() - stock.getS_price()*num));
-//		   return true;
-//	   } else {
-//		   return false;
-//	   }
-//   }
-   
-   public static boolean stockBuy(String stockName,int num) {
-	   
-	   for(Stock stock:stmodel.getStock() ) {
-		   if(stockName.equals(stock.getS_name())){
-			   if(model.getCurrentPlayer().getU_wallet() >= stock.getS_price()*num) {
-				   model.getCurrentPlayer().setU_wallet((model.getCurrentPlayer().getU_wallet() - stock.getS_price()*num));
-				   return true;
-			   } else {
-				   return false;
-			   }
-		   } else {
-			   return false;
-		   }
-	   }
-	   return false;
-   }
-   
-   public static void stockSell(String stockName,int num) {
-	   
-	   for(Stock stock:stmodel.getStock() ) {
-		   if(stockName.equals(stock.getS_name())) {
-			   model.getCurrentPlayer().setU_wallet((model.getCurrentPlayer().getU_wallet() + stock.getS_price()*num));
-		   }
-	   }
-   }
-   
-   public static Stock[] showstocks() {
-	   return stmodel.getStock();
-   }
-
+    
+    private static StockModel stmodel = StockModel.getModel();
+    private static Model model = Model.getModel();
+    
+    public static void priceChange(News n) {
+        for(Stock stock : stmodel.getStock()) {
+            double rate;
+            
+            if(n.getS_name().equals(stock.getS_name())) {
+                // 뉴스에 언급된 주식
+                if(n.getN_isGood()) {
+                    rate = Math.random() * 0.2; // 0 ~ 0.2 (상승)
+                    stock.setS_price((int)(stock.getS_price() * (1 + rate)));
+                    System.out.println("📈 " + stock.getS_name() + " 주가 상승: +" + String.format("%.1f", rate * 100) + "%");
+                } else {
+                    rate = Math.random() * 0.2; // 0 ~ 0.2 (하락)
+                    stock.setS_price((int)(stock.getS_price() * (1 - rate)));
+                    System.out.println("📉 " + stock.getS_name() + " 주가 하락: -" + String.format("%.1f", rate * 100) + "%");
+                }
+                stock.setS_graph(rate);
+            } else {
+                // 다른 주식들의 소폭 랜덤 변동
+                rate = (Math.random() - 0.5) * 0.1; // -0.05 ~ 0.05
+                stock.setS_price((int)(stock.getS_price() * (1 + rate)));
+                stock.setS_graph(Math.abs(rate));
+            }
+        }
+    }
+    
+    public static boolean stockBuy(String stockName, int num) {
+        if (num <= 0) {
+            return false;
+        }
+        
+        Stock targetStock = findStockByName(stockName);
+        if (targetStock == null) {
+            return false;
+        }
+        
+        int totalCost = targetStock.getS_price() * num;
+        User currentPlayer = model.getCurrentPlayer();
+        
+        if (currentPlayer.getU_wallet() >= totalCost) {
+            currentPlayer.setU_wallet(currentPlayer.getU_wallet() - totalCost);
+            targetStock.setS_amount(targetStock.getS_amount()-num);
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public static boolean stockSell(String stockName, int num) {
+        if (num <= 0) {
+            return false;
+        }
+        
+        Stock targetStock = findStockByName(stockName);
+        if (targetStock == null) {
+            return false;
+        }
+        
+        User currentPlayer = model.getCurrentPlayer();
+        
+        // TODO: 사용자가 충분한 주식을 보유하고 있는지 확인
+        // if (!currentPlayer.hasEnoughStocks(stockName, num)) {
+        //     return false;
+        // }
+        
+        int totalValue = targetStock.getS_price() * num;
+        currentPlayer.setU_wallet(currentPlayer.getU_wallet() + totalValue);
+        
+        // TODO: 사용자 포트폴리오에서 주식 제거
+        // currentPlayer.removeFromPortfolio(stockName, num);
+        
+        return true;
+    }
+    
+    // 주식 이름으로 찾기 헬퍼 메서드
+    private static Stock findStockByName(String stockName) {
+        for (Stock stock : stmodel.getStock()) {
+            if (stockName.equals(stock.getS_name())) {
+                return stock;
+            }
+        }
+        return null;
+    }
+    
+    public static Stock[] showStocks() {
+        return stmodel.getStock();
+    }
+    
+    // 추가 유틸리티 메서드들
+    public static Stock getStockByName(String stockName) {
+        return findStockByName(stockName);
+    }
+    
+    public static boolean isValidStock(String stockName) {
+        return findStockByName(stockName) != null;
+    }
 }

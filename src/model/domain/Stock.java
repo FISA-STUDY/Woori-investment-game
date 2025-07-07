@@ -17,4 +17,5 @@ public class Stock {
 	@NonNull
 	private int s_price;
 	private double s_graph;
+	private int s_amount;
 }
