@@ -66,7 +66,7 @@ public class ConsoleUI {
 	        String price = String.format("%-18s", formatCurrency(s.getS_price()));
 	        
 	        // 그래프는 그대로
-	        String graph = s.getS_graph();
+	        double graph = s.getS_graph();
 	        
 	        System.out.printf("%-20s %-20s %s%n", stockName, price, graph);
 	    }
@@ -134,7 +134,6 @@ public class ConsoleUI {
                 		
                 		try {
                 			quantity = Integer.parseInt(input[1]);
-                			if(StockDatabase.getStocks())
                 		}
                 	}
                 } else {
@@ -236,4 +235,6 @@ public class ConsoleUI {
     public static String formatCurrency(int amount) {
         return currencyFormat.format(amount) + "원";
     }
+    
+    
 }
