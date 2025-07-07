@@ -9,11 +9,6 @@ public class NewsGenerator {
         return Database.getRandomNews();
     }
     
-
-    public News generateNewsForCompany(String companyName) {
-        return Database.getRandomNewsByCompany(companyName);
-    }
-    
  
     public News generateNewsAndApplyPriceChange() {
         // 1. 랜덤 뉴스 생성

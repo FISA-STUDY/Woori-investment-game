@@ -7,7 +7,7 @@ import model.domain.PortFolio;
 import model.domain.User;
 
 public class Model {
-    private Database db = new Database();
+    private static Database db = new Database();
 
 	private User currentPlayer;
     
@@ -57,7 +57,8 @@ public class Model {
     public void setCurrentDay(int day) {
         this.currentDay = day;
     }
-    public  List<PortFolio> getPortFolios(){
+    
+    public static List<PortFolio> getPortFolios(){
         return db.getPortFolios();
      }
     

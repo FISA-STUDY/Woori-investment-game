@@ -10,7 +10,7 @@ import model.domain.User;
 public class MarketManager {
    //포트폴리오 가져와서 전체 수량, 가격 정리
 //   private List<Portfolio> portfolios = new ArrayList<>();
-   List<PortFolio> portfolios = Model.getPortFolios();
+   private static List<PortFolio>  portfolios = Model.getPortFolios();
    private static Model model = Model.getModel();
    
    
