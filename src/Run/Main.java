@@ -9,18 +9,13 @@ public class Main {
         try {
             Model model = Model.getModel();
 
-            // 게임 시작 - 플레이어 생성
             User player = ConsoleUI.createPlayer();
-
-            // 게임 1일차 시작
             int currentDay = 1;
 
             System.out.println("\n=== 게임 시작 ===");
 
-            // 게임 상태 헤더 출력
             ConsoleUI.printGameStatus(currentDay, model.getCurrentPlayer());
 
-            // 플레이어 정보 출력
             ConsoleUI.displayUserInfo(model.getCurrentPlayer());
 
             boolean isGaming = true;
@@ -30,7 +25,6 @@ public class Main {
                 int choice = ConsoleUI.printMenuChoice();
                 switch(choice) {
                     case 1:
-                        // 주식 시장 보기
                         System.out.println("\n📊 주식 시장 현황");
                         ConsoleUI.printStocks();
                         break;

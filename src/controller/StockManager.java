@@ -20,18 +20,18 @@ public class StockManager {
             if(n.getS_name().equals(stock.getS_name())) {
                 // 뉴스에 언급된 주식
                 if(n.getN_isGood()) {
-                    rate = Math.random() * 0.2; // 0 ~ 0.2 (상승)
+                    rate = Math.random() * 0.2; 
                     stock.setS_price((int)(stock.getS_price() * (1 + rate)));
                     System.out.println("📈 " + stock.getS_name() + " 주가 상승: +" + String.format("%.1f", rate * 100) + "%");
                 } else {
-                    rate = Math.random() * 0.2; // 0 ~ 0.2 (하락)
+                    rate = Math.random() * 0.2; 
                     stock.setS_price((int)(stock.getS_price() * (1 - rate)));
                     System.out.println("📉 " + stock.getS_name() + " 주가 하락: -" + String.format("%.1f", rate * 100) + "%");
                 }
                 stock.setS_graph(rate);
             } else {
                 // 다른 주식들의 소폭 랜덤 변동
-                rate = (Math.random() - 0.5) * 0.1; // -0.05 ~ 0.05
+                rate = (Math.random() - 0.5) * 0.1; 
                 stock.setS_price((int)(stock.getS_price() * (1 + rate)));
                 stock.setS_graph(Math.abs(rate));
             }
@@ -73,16 +73,8 @@ public class StockManager {
         
         User currentPlayer = model.getCurrentPlayer();
         
-        // TODO: 사용자가 충분한 주식을 보유하고 있는지 확인
-        // if (!currentPlayer.hasEnoughStocks(stockName, num)) {
-        //     return false;
-        // }
-        
         int totalValue = targetStock.getS_price() * num;
         currentPlayer.setU_wallet(currentPlayer.getU_wallet() + totalValue);
-        
-        // TODO: 사용자 포트폴리오에서 주식 제거
-        // currentPlayer.removeFromPortfolio(stockName, num);
         
         return true;
     }
