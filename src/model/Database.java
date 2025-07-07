@@ -6,7 +6,7 @@ import java.util.Random;
 public class Database {
     private static News[] news; // 실체화 되는 시점 : 객체 생성시점
     private static Random random = new Random();
-
+    
     // byte code가 메모리에 로딩될 때 읽혀지는 시점에 실행
     static {
         news = new News[] {
@@ -23,96 +23,13 @@ public class Database {
         };
     }
 
-    /**
-     * 모든 뉴스 반환
-     */
     public static News[] getNews() {
         return news;
     }
     
-    /**
-     * 랜덤한 뉴스 하나 반환
-     */
     public static News getRandomNews() {
         int randomIndex = random.nextInt(news.length);
         return news[randomIndex];
     }
-    
-    /**
-     * 특정 회사의 뉴스만 반환
-     */
-    public static News[] getNewsByCompany(String companyName) {
-        // 해당 회사 뉴스 개수 계산
-        int count = 0;
-        for (News n : news) {
-            if (n.getS_name().equals(companyName)) {
-                count++;
-            }
-        }
         
-        // 해당 회사 뉴스 배열 생성
-        News[] companyNews = new News[count];
-        int index = 0;
-        for (News n : news) {
-            if (n.getS_name().equals(companyName)) {
-                companyNews[index++] = n;
-            }
-        }
-        
-        return companyNews;
-    }
-    
-    /**
-     * 특정 회사의 랜덤 뉴스 반환
-     */
-    public static News getRandomNewsByCompany(String companyName) {
-        News[] companyNews = getNewsByCompany(companyName);
-        if (companyNews.length > 0) {
-            int randomIndex = random.nextInt(companyNews.length);
-            return companyNews[randomIndex];
-        }
-        return null;
-    }
-    
-    /**
-     * 뉴스 추가 (동적으로 뉴스를 추가하고 싶을 때)
-     */
-    public static void addNews(News newNews) {
-        News[] newArray = new News[news.length + 1];
-        System.arraycopy(news, 0, newArray, 0, news.length);
-        newArray[news.length] = newNews;
-        news = newArray;
-    }
-    
-    /**
-     * 사용 가능한 모든 회사명 반환
-     */
-    public static String[] getAvailableCompanies() {
-        // 중복 제거를 위해 임시로 배열 사용 (실제로는 Set을 사용하는 것이 좋음)
-        String[] companies = new String[news.length];
-        int count = 0;
-        
-        for (News n : news) {
-            String company = n.getS_name();
-            boolean exists = false;
-            
-            // 이미 존재하는 회사인지 확인
-            for (int i = 0; i < count; i++) {
-                if (companies[i].equals(company)) {
-                    exists = true;
-                    break;
-                }
-            }
-            
-            // 새로운 회사라면 추가
-            if (!exists) {
-                companies[count++] = company;
-            }
-        }
-        
-        // 실제 크기만큼 배열 생성
-        String[] result = new String[count];
-        System.arraycopy(companies, 0, result, 0, count);
-        return result;
-    }
 }
