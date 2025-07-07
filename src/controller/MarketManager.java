@@ -16,12 +16,17 @@ public class MarketManager {
    
    void buyStock(Stock stock, int num){
       for(PortFolio portfolio : portfolios){
-         if(portfolio.getP_name().equals(stock.getS_name())){
+    	if(portfolio.getP_name().equals(stock.getS_name())){
+        	 System.out.println("ㅎㅇㅎㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅇㅎ"+stock.getS_name());
             int now_price = (portfolio.getP_price()*portfolio.getP_amount() + stock.getS_price()*num)/(portfolio.getP_amount() +num);
             portfolio.setP_price(now_price);
             portfolio.setP_amount(portfolio.getP_amount()+num);
             PortFolio pf = new PortFolio(stock.getS_name(), num, stock.getS_price(), model.getCurrentPlayer().getU_name());
             portfolios.add(pf);
+         }else {
+        	 System.out.println("여기로 와야함");
+             PortFolio pf = new PortFolio(stock.getS_name(), num, stock.getS_price(), model.getCurrentPlayer().getU_name());
+             portfolios.add(pf);
          }
       }
    }
