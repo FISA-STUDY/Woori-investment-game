@@ -5,6 +5,8 @@ import java.util.List;
 import model.domain.News;
 import model.domain.PortFolio;
 import model.domain.User;
+import java.util.List;
+
 
 public class Model {
     private static Database db = new Database();

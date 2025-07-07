@@ -93,6 +93,21 @@ public class Main {
                 if(isGaming && choice != 0) {
                     System.out.println("\n" + "=".repeat(60));
                 }
+                
+                if(currentDay == 20)
+                	{
+	                	 System.out.println();
+	                     ConsoleUI.printInfo("게임을 종료합니다. 수고하셨습니다!");
+	                     System.out.println();
+	                     ConsoleUI.printSuccess("최종 게임 결과:");
+	                     System.out.println("────────────────────────────────────────");
+	                     System.out.println("📅 플레이 일수: " + currentDay + "일");
+	                     System.out.println("👤 플레이어: " + model.getCurrentPlayer().getU_name());
+	                     System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getU_wallet()));
+	                     System.out.println();
+	                     isGaming = false;
+	                     break;
+                	}
             }
 
         } catch (Exception e) {

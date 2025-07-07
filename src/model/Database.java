@@ -1,11 +1,11 @@
 package model;
 
 import model.domain.News;
-import model.domain.PortFolio;
-
 import java.util.ArrayList;
-import java.util.List;
+import model.domain.PortFolio;
 import java.util.Random;
+import java.util.List;
+
 
 public class Database {
     private static News[] news; // 실체화 되는 시점 : 객체 생성시점
@@ -40,5 +40,10 @@ public class Database {
     public static List<PortFolio> getPortFolios(){
        return portfolios;
     }
+
+	public static News getRandomNewsByCompany(String companyName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
         
 }
