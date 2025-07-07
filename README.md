@@ -1,9 +1,11 @@
-# 💰 JAVA로 미니투자게임
+# 💰 JAVA로 모의투JA 게임
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Console Game](https://img.shields.io/badge/Console_Game-000000?style=for-the-badge&logo=windows-terminal&logoColor=white)
-![Investment Simulator](https://img.shields.io/badge/Investment_Simulator-00D26A?style=for-the-badge&logo=stockx&logoColor=white)
-![Pure Java](https://img.shields.io/badge/Pure_Java-FF6B6B?style=for-the-badge&logo=java&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=plastic&logo=openjdk&logoColor=white)
+![Console Game](https://img.shields.io/badge/Console_Game-000000?style=plastic&logo=windows-terminal&logoColor=white)
+![Investment Simulator](https://img.shields.io/badge/Investment_Simulator-00D26A?style=plastic&logo=stockx&logoColor=white)
+![MVC Pattern](https://img.shields.io/badge/MVC_Pattern-FF6B6B?style=plastic&logo=java&logoColor=white)
+
+![TalkMedia_i_f3ffb61fb128 png](https://github.com/user-attachments/assets/88685756-bb55-4afb-9de0-0904eea01216)
 
 순수 자바로 구현한 콘솔 기반 주식 투자 시뮬레이션 게임입니다.
 
@@ -12,8 +14,7 @@
 실제 주식 시장을 모방한 투자 시뮬레이션 게임으로, 가상의 자금으로 주식을 매수/매도하며 수익을 극대화하는 것이 목표입니다.
 
 ## 📊 ERD
-<img width="892" alt="스크린샷 2025-07-04 오후 12 37 48" src="https://github.com/user-attachments/assets/08f12ec9-755c-4fa3-8d70-152b7b4a8baf" />
-
+<img width="892" alt="스크린샷 2025-07-04 오후 12 37 48" src="https://github.com/user-attachments/assets/08f12ec9-755c-4fa3-8d70-152b7b4a8baf" />
 
 ## 🚀 주요 기능
 
@@ -36,44 +37,59 @@
 - **개별 종목별** 손익 현황
 
 ### 📰 뉴스 시스템
-- **랜덤 뉴스** 생성 (30% 확률)
+- **랜덤 뉴스** 생성 (확률 기반)
 - **호재/악재**에 따른 주가 영향
 - **뉴스 히스토리** 관리
 - **실시간 시장 반응** 시뮬레이션
 
-### 📊 게임 통계
-- **게임 진행** 현황
-- **투자 성과** 종합 분석
-- **총 자산** 변화 추적
+### 📊 게임 진행 시스템
+- **일일 진행** 시스템
+- **게임 상태** 관리
+- **사용자 정보** 표시
 
 ## 🛠️ 기술 스택
 
-![Java](https://img.shields.io/badge/Language-Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white)
-![Console](https://img.shields.io/badge/Interface-Console-000000?style=flat-square&logo=windows-terminal&logoColor=white)
-![OOP](https://img.shields.io/badge/Paradigm-OOP-4CAF50?style=flat-square&logo=object&logoColor=white)
+![Java](https://img.shields.io/badge/Language-Java-ED8B00?style=plastic&logo=openjdk&logoColor=white)
+![Console](https://img.shields.io/badge/Interface-Console-000000?style=plastic&logo=windows-terminal&logoColor=white)
+![MVC](https://img.shields.io/badge/Architecture-MVC-4CAF50?style=plastic&logo=object&logoColor=white)
 
 - **언어**: Pure Java (JDK 8+)
 - **인터페이스**: Console 기반
-- **패러다임**: 객체지향 프로그래밍
-- **외부 라이브러리**: 없음 (순수 자바)
+- **아키텍처**: MVC 패턴
+- **외부 라이브러리**: Lombok
 
 ## 📁 프로젝트 구조
 
 ```
-📦 MiniInvestmentGame
- ┣ 📜 MiniInvestmentGame.java
- ┣ 📜 README.md
- └ 📂 classes/
-   ┣ 📜 Stock.class
-   ┣ 📜 User.class
-   ┣ 📜 Portfolio.class
-   ┗ 📜 News.class
+📦 Mini-Project
+ ┣ 📂 src/
+ ┃ ┣ 📂 controller/
+ ┃ ┃ ┣ 📜 GameEngine.java
+ ┃ ┃ ┣ 📜 MarketManager.java
+ ┃ ┃ ┣ 📜 NewsGenerator.java
+ ┃ ┃ ┗ 📜 TradeManager.java
+ ┃ ┃
+ ┃ ┣ 📂 model/
+ ┃ ┃ ┣ 📂 domain/
+ ┃ ┃ ┃ ┣ 📜 News.java
+ ┃ ┃ ┃ ┣ 📜 Portfolio.java
+ ┃ ┃ ┃ ┣ 📜 Stock.java
+ ┃ ┃ ┃ ┣ 📜 User.java
+ ┃ ┃ ┣ 📜 database.java
+ ┃ ┃ ┣ 📜 model.java
+ ┃ ┃
+ ┃ ┣ 📂 view/
+ ┃ ┃ ┣ 📜 consoleUI.java
+ ┃ ┃ 
+ ┃ ┗ 📂 Run/
+ ┃   ┗ 📜 Main.java
+ ┗ 📜 README.md
 ```
 
 ## ⚙️ 설치 및 실행
 
 ### 📋 사전 요구사항
-![JDK](https://img.shields.io/badge/JDK-8+-007396?style=flat-square&logo=java&logoColor=white)
+![JDK](https://img.shields.io/badge/JDK-8+-007396?style=plastic&logo=java&logoColor=white)
 
 - Java JDK 8 이상
 
@@ -81,139 +97,149 @@
 
 1. **저장소 클론**
    ```bash
-   git clone https://github.com/your-username/mini-investment-game.git
+   git clone https://github.com/FISA-STUDY/Woori-investment-game.git
    cd mini-investment-game
    ```
 
 2. **컴파일**
    ```bash
-   javac MiniInvestmentGame.java
+   javac -d bin src/**/*.java
    ```
 
 3. **실행**
    ```bash
-   java MiniInvestmentGame
+   java -cp bin Run.Main
    ```
 
 ## 🎯 게임 플레이 가이드
 
 ### 🏁 게임 시작
 1. **사용자 이름** 입력
-2. **초기 자금** 설정 (기본: 10,000,000원)
+2. **초기 자금** 자동 설정 (1,000,000원)
 3. 게임 시작!
 
 ### 📋 메인 메뉴
 - `1` 📊 **주식 시장 보기** - 현재 주가 및 변동 현황
-- `2` 💳 **주식 매수** - 원하는 종목 매수
-- `3` 💸 **주식 매도** - 보유 종목 매도
-- `4` 📈 **포트폴리오 보기** - 투자 현황 및 수익률
-- `5` 📰 **뉴스 보기** - 시장 뉴스 확인
-- `6` ⏭️ **다음 날** - 시간 진행
-- `7` 📊 **게임 통계** - 전체 게임 현황
+- `2` 💳 **주식 매매** - 매수/매도 메뉴
+  - `1` 💳 **주식 매수** - 원하는 종목 매수
+  - `2` 📈 **주식 매도** - 보유 종목 매도
+- `3` 📈 **포트폴리오 보기** - 투자 현황 및 수익률
+- `4` 📅 **다음날로 넘어가기** - 시간 진행 및 뉴스 생성
 - `0` 🚪 **게임 종료**
 
 ### 💡 게임 팁
-- 📰 **뉴스를 주의깊게** 확인하세요
+- 📰 **뉴스를 주의깊게** 확인하세요 - 주가에 직접적인 영향을 줍니다
 - 📈 **분산 투자**로 리스크를 줄이세요
 - 📊 **포트폴리오**를 정기적으로 점검하세요
 - ⏰ **타이밍**이 중요합니다
 
-## 🗂️ 클래스 구조
+### 🎮 게임 사용법
+- **매수/매도**: "삼성전자 10" 형식으로 입력
+- **거래 확인**: y/n으로 거래 확인
+- **취소**: 언제든지 '0'을 입력하여 이전 메뉴로 돌아가기
 
-### 📊 Stock
-```java
-- String name      // 주식명
-- int price        // 현재가
-- int graph        // 변동폭
-```
+## 🗂️ 주요 클래스 구조
 
-### 👤 User
-```java
-- String name      // 사용자명
-- long wallet      // 보유 현금
-```
+### 🎮 Controller Layer
+- **GameEngine**: 게임 전체 진행 및 상태 관리
+- **MarketManager**: 주식 시장 데이터 관리
+- **NewsGenerator**: 뉴스 생성 및 주가 변동 적용
+- **TradeManager**: 주식 매매 로직 관리
 
-### 📈 Portfolio
-```java
-- String portfolioName  // 포트폴리오명
-- String stockName     // 주식명
-- int purchasePrice    // 매수가
-- int amount          // 보유량
-- String userName     // 사용자명
-```
-
-### 📰 News
-```java
-- int id              // 뉴스 ID
-- String stockName    // 관련 주식명
-- boolean isGood      // 호재/악재
-- String message      // 뉴스 내용
-```
+### 🖥️ Run Layer
+- **Main**: 게임 시작점 및 초기화
 
 ## 🎨 게임 스크린샷
 
 ```
 ╔════════════════════════════════════════╗
-║          💰 미니투자게임 💰            ║
-║        Pure Java Implementation        ║
+              💰 미니투자게임 💰               
 ╚════════════════════════════════════════╝
 
 ============================================================
-📅 1일차 | 👤 투자왕 | 💰 10,000,000원
+📅 1일차 | 👤 투자왕 | 💰 1,000,000원
 ============================================================
 
 📋 메인 메뉴
+
 1. 📊 주식 시장 보기
-2. 💳 주식 매수
-3. 💸 주식 매도
-4. 📈 포트폴리오 보기
-5. 📰 뉴스 보기
-6. ⏭️  다음 날
-7. 📊 게임 통계
+2. 💳 주식 매매
+3. 📈 포트폴리오 보기
+4. 📅 다음날로 넘어가기
 0. 🚪 게임 종료
+
+➤ 메뉴를 선택하세요 (0-4): 
 ```
 
-## 🔮 향후 계획
+## 🔧 주요 기능 상세
 
-![Roadmap](https://img.shields.io/badge/Roadmap-2024-FF6B6B?style=flat-square&logo=roadmap&logoColor=white)
+### 📊 주식 시장
+- 주식 가격 표시
+- 가격 변동률 시각화
+- 각 종목별 거래 가능 수량 표시
 
-- [ ] 🎨 **GUI 버전** 구현 (JavaFX)
-- [ ] 💾 **게임 저장/로드** 기능
-- [ ] 📊 **차트 시각화** 추가
-- [ ] 🏆 **순위 시스템** 구현
-- [ ] 🌐 **멀티플레이어** 지원
-- [ ] 📈 **더 많은 종목** 추가
-- [ ] 🎯 **퀘스트 시스템** 도입
+### 💰 매매 시스템
+- 직관적인 매수/매도 인터페이스
+- 거래 전 확인 시스템
+- 잔고 부족 및 보유량 부족 검증
+- 거래 완료 후 자산 업데이트
 
-## 🤝 기여하기
+### 📈 포트폴리오
+- 보유 주식 현황 표시
+- 평균 매수가 계산
+- 현재 가치 실시간 업데이트
+- 총 자산 계산
 
-1. **Fork** 프로젝트
-2. **Feature branch** 생성 (`git checkout -b feature/AmazingFeature`)
-3. **Commit** 변경사항 (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** to branch (`git push origin feature/AmazingFeature`)
-5. **Pull Request** 생성
+### 📰 뉴스 시스템
+- 매일 랜덤 뉴스 생성
+- 호재/악재에 따른 주가 변동
+- 뉴스 내용 표시
 
-## 📄 라이센스
+## 🔍 프로젝트 회고 및 개선사항
 
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+### 📋 발견된 문제점들
 
-이 프로젝트는 MIT 라이센스 하에 배포됩니다. 자세한 내용은 `LICENSE` 파일을 참조하세요.
+#### 1. 클래스 구조 관련
+- ❌ **생성자 위치**: 변수 선언 아래에 생성자 배치
+- ❌ **네이밍 컨벤션**: `u_name`, `s_price` 등 언더스코어 사용
+- ✅ **개선**: 생성자를 클래스 최상단에, camelCase 네이밍 사용
 
-## 👨‍💻 개발자
+#### 2. 모델 객체 설계
+- ❌ **싱글톤 패턴**: 모든 사용자가 하나의 Model 객체 공유
+- ❌ **currentPlayer**: 멀티유저 환경에서 문제 발생 가능
+- ✅ **개선**: 각 게임 세션별 독립적인 객체 관리
 
-![Developer](https://img.shields.io/badge/Developer-Your_Name-blue?style=flat-square&logo=github&logoColor=white)
+#### 3. 객체 생성 및 초기화
+- ❌ **메서드 내 생성**: `createPlayer()` 메서드 내부에서 객체 생성
+- ✅ **개선**: 클래스 레벨에서 고정된 유저 객체 생성
 
-**Your Name** - [@your-username](https://github.com/your-username)
+#### 4. 코드 스타일
+- ❌ **괄호 들여쓰기**: 일관성 없는 코드 포맷팅
+- ❌ **불필요한 import**: 사용하지 않는 import 문들
+- ✅ **개선**: 일관된 스타일 가이드 적용
 
-프로젝트 링크: [https://github.com/your-username/mini-investment-game](https://github.com/your-username/mini-investment-game)
+#### 5. 입력 처리 및 예외 처리
+- ❌ **직접 파싱**: `Integer.parseInt()` 예외 처리 부족
+- ✅ **개선**: Scanner + 예외처리로 안전한 입력 검증
 
-## 🙏 감사의 말
+#### 6. 불변 객체 설계
+- ❌ **가변 필드**: 변경되지 않는 값도 가변으로 선언
+- ✅ **개선**: `final` 키워드로 불변 필드 설계
+  
 
-![Thanks](https://img.shields.io/badge/Thanks-Java_Community-red?style=flat-square&logo=java&logoColor=white)
+### 💡 학습된 교훈
 
-- Java 커뮤니티의 지원에 감사드립니다
-- 순수 자바의 힘을 보여주는 프로젝트입니다
+1. **객체지향 설계 원칙**
+   - 단일 책임 원칙 준수
+   - 불변 객체로 안전성 확보
+   - 의존성 주입 방식 사용
 
----
+2. **코드 품질 향상**
+   - 일관된 네이밍 컨벤션
+   - 명확한 예외 처리 메시지
+   - 철저한 입력 검증
 
-⭐ 이 프로젝트가 도움이 되었다면 **Star**를 눌러주세요!
+3. **유지보수성 개선**
+   - 상수 분리로 매직 넘버 제거
+   - 메서드 단일 책임 원칙
+   - 관심사별 클래스 분리
