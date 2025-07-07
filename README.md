@@ -99,7 +99,7 @@
 1. **저장소 클론**
    ```bash
    git clone https://github.com/FISA-STUDY/Woori-investment-game.git
-   cd mini-investment-game
+   cd Woori-investment-game
    ```
 
 2. **컴파일**
