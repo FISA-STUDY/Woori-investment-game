@@ -31,5 +31,10 @@ public class Database {
         int randomIndex = random.nextInt(news.length);
         return news[randomIndex];
     }
+    
+    private List<PortFolio> portfolios = new ArrayList<>();
+    public List<PortFolio> getPortFolios(){
+       return portfolios;
+    }
         
 }
