@@ -1,4 +1,4 @@
-# 💰 JAVA로 모의투JA 게임
+## 💰 JAVA로 모의투JA 게임
 
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=plastic&logo=openjdk&logoColor=white)
 ![Console Game](https://img.shields.io/badge/Console_Game-000000?style=plastic&logo=windows-terminal&logoColor=white)
