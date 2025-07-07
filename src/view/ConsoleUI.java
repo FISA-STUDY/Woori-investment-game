@@ -19,7 +19,7 @@ public class ConsoleUI {
         
         String playerName = "";
         while(playerName.trim().isEmpty()) {
-            printPrompt("플레이어 이름을 입력하세요");
+            printPrompt("플레이어 이름을 입력하세요"); 
             playerName = scanner.nextLine();
             
             if(playerName.trim().isEmpty()) {
@@ -124,7 +124,7 @@ public class ConsoleUI {
     
     // 돈 형식으로 포맷팅
     public static String formatCurrency(int amount) {
-        return currencyFormat.format(amount) + "원";
+        return currencyFormat.format(amount)  + "원";
     }
     
     // 일시정지 (Enter 키 대기)
