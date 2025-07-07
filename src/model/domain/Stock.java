@@ -15,6 +15,7 @@ public class Stock {
 	@NonNull
 	private String s_name;
 	@NonNull
-	private String s_price;
-	private String s_graph;
+	private int s_price;
+	private double s_graph;
+	private int s_amount;
 }
