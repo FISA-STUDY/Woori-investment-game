@@ -21,7 +21,7 @@
 
 ### 📈 주식 시장 시뮬레이션
 - **6개 주요 종목** 실시간 거래
-  - 삼성전자, SK하이닉스, NAVER, 카카오, LG에너지솔루션, 현대차
+  - 삼성전자, SK하이닉스, NAVER, 카카오, LG에너지솔루션
 - **랜덤 가격 변동** 시스템
 - **상승/하락/보합** 상태 표시
 
@@ -43,18 +43,13 @@
 - **뉴스 히스토리** 관리
 - **실시간 시장 반응** 시뮬레이션
 
-### 📊 게임 진행 시스템
-- **일일 진행** 시스템
-- **게임 상태** 관리
-- **사용자 정보** 표시
-
 ## 🛠️ 기술 스택
 
 ![Java](https://img.shields.io/badge/Language-Java-ED8B00?style=plastic&logo=openjdk&logoColor=white)
 ![Console](https://img.shields.io/badge/Interface-Console-000000?style=plastic&logo=windows-terminal&logoColor=white)
 ![MVC](https://img.shields.io/badge/Architecture-MVC-4CAF50?style=plastic&logo=object&logoColor=white)
 
-- **언어**: Pure Java (JDK 8+)
+- **언어**: Pure Java (JDK 17+)
 - **인터페이스**: Console 기반
 - **아키텍처**: MVC 패턴
 - **외부 라이브러리**: Lombok
