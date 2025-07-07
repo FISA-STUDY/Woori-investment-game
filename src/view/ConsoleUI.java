@@ -336,4 +336,5 @@ public class ConsoleUI {
     public static String formatCurrency(int amount) {
         return currencyFormat.format(amount)  + "원";
     }
+    
 }

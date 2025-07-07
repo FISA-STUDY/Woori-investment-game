@@ -1,15 +1,8 @@
 package model;
 
 import model.domain.News;
-<<<<<<< HEAD
-
 import java.util.ArrayList;
-=======
 import model.domain.PortFolio;
-
-import java.util.ArrayList;
-import java.util.List;
->>>>>>> 3708f6f42d762e0f2860868d1f3ee87adfd95f93
 import java.util.Random;
 import java.util.List;
 
@@ -47,5 +40,10 @@ public class Database {
     public static List<PortFolio> getPortFolios(){
        return portfolios;
     }
+
+	public static News getRandomNewsByCompany(String companyName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
         
 }
