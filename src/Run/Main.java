@@ -48,6 +48,9 @@ public class Main {
                                 case 2:
                                     ConsoleUI.sellStockMenu();
                                     break;
+                                case 3:
+                                	ConsoleUI.showPortfolio();
+                                	break;
                                 case 0:
                                     inTradeMenu = false;
                                     break;
