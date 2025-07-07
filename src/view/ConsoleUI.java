@@ -71,6 +71,7 @@ public class ConsoleUI {
     public static void printMainMenu() {
         System.out.println();
         System.out.println("📋 메인 메뉴");
+        System.out.println();
         System.out.println("1. 📊 주식 시장 보기");
         System.out.println("2. 💳 주식 매매");
         System.out.println("3. 📈 포트폴리오 보기");
@@ -99,6 +100,7 @@ public class ConsoleUI {
     public static void printTradeMenu() {
         System.out.println();
         System.out.println("📋 주식 매매 메뉴");
+        System.out.println();
         System.out.println("1. 💳 주식 매수");
         System.out.println("2. 📈 주식 매도");
         System.out.println("0. 🚪 뒤로 가기");
@@ -412,7 +414,7 @@ public class ConsoleUI {
         if (model.getPortFolios() != null && !model.getPortFolios().isEmpty()) {
             System.out.println("📊 보유 주식:");
             System.out.println("╔════════════════════════════════════════════════════════════════╗");
-            System.out.printf("  %-15s  %-8s  %-12s  %-12s%n", "종목명", "수량", "매입가", "현재가치");
+            System.out.printf("  %-15s  %-8s  %-12s  %-12s%n", "종목명", "수량", "평단가", "현재가치");
             System.out.println("╠════════════════════════════════════════════════════════════════╣");
             
             int totalStockValue = 0;
@@ -436,6 +438,7 @@ public class ConsoleUI {
             System.out.println("╚════════════════════════════════════════════════════════════════╝");
             System.out.println();
             System.out.println("📊 총 주식 가치: " + formatCurrency(totalStockValue));
+            System.out.println();
         } else {
             System.out.println("보유한 주식이 없습니다.");
         }
@@ -443,6 +446,7 @@ public class ConsoleUI {
         System.out.printf("  %-18s  %-12s  %-10s", "📈 종목명", "💰 평단가", "📦 수량");
         System.out.println();
         model.getPortFolios().forEach(p ->System.out.printf("  %-18s  %-12d  %-10d", p.getP_name(),p.getP_price(),p.getP_amount()));;
+        System.out.println();
         System.out.println();
         printPrompt("계속하려면 Enter를 누르세요");
         scanner.nextLine();
