@@ -436,7 +436,6 @@ public class ConsoleUI {
             System.out.println("╚════════════════════════════════════════════════════════════════╝");
             System.out.println();
             System.out.println("📊 총 주식 가치: " + formatCurrency(totalStockValue));
-            System.out.println("💎 총 자산: " + formatCurrency(currentPlayer.getU_wallet() + totalStockValue));
         } else {
             System.out.println("보유한 주식이 없습니다.");
         }
