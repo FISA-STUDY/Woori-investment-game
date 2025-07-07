@@ -44,7 +44,7 @@ public class MarketManager {
 
 	            // 수량 감소
 	            portfolio.setP_amount(portfolio.getP_amount() - num);
-
+	            
 	            // 평균 단가는 매도 시 갱신하지 않음
 
 	            return true;
