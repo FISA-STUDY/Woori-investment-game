@@ -68,19 +68,20 @@ public class StockManager {
         }
         
         Stock targetStock = findStockByName(stockName);
+        boolean isSuccess = marketManager.sellStock(targetStock, num);
         if (targetStock == null) {
             return false;
         }
-        
-        User currentPlayer = model.getCurrentPlayer();
-        
-        int totalValue = targetStock.getS_price() * num;
-        currentPlayer.setU_wallet(currentPlayer.getU_wallet() + totalValue);
-        
-        // TODO: 사용자 포트폴리오에서 주식 제거
-        marketManager.sellStock(targetStock, num);
-        
-        return true;
+        if(isSuccess) {
+        	 User currentPlayer = model.getCurrentPlayer();
+             
+             int totalValue = targetStock.getS_price() * num;
+             currentPlayer.setU_wallet(currentPlayer.getU_wallet() + totalValue);
+        }else {
+        	return false;
+        }
+        return false;
+       
     }
     
     // 주식 이름으로 찾기 헬퍼 메서드

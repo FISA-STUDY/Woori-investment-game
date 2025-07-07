@@ -35,19 +35,21 @@ public class MarketManager {
 	      }
    }
    //포트폴리오 가져와서 수량정리 + userwallet정리
-   void sellStock(Stock stock, int num) {
+   boolean sellStock(Stock stock, int num) {
       for(PortFolio portfolio : portfolios){
          if(portfolio.getP_name().equals(stock.getS_name())){
             int now_price = (portfolio.getP_price()*portfolio.getP_amount() + stock.getS_price()*num)/(portfolio.getP_amount() +num);
             portfolio.setP_price(now_price);
             if(portfolio.getP_amount()-num<= 0) {
             	System.out.println("판매할 개수가 보유량보다 클수 없습니다.");
-            	return;
+            	return false;
             }
             portfolio.setP_amount(portfolio.getP_amount()-num);
             model.getCurrentPlayer().setU_wallet( model.getCurrentPlayer().getU_wallet()+(stock.getS_price()*num));
+            return true;
          }
       }
+	return false;
    }
    
    public static int calculateTotalPortfolioValue() {
