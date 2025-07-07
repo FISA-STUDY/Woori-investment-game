@@ -449,17 +449,31 @@ public class ConsoleUI {
         scanner.nextLine();
     }
     
-    // 포트폴리오 요약 표시 (매도 시 참고용)
-    private static void showPortfolioSummary() {
-        System.out.println("💼 현재 보유 주식:");
-        if (model.getPortFolios() != null && !model.getPortFolios().isEmpty()) {
-            model.getPortFolios().forEach(p -> 
-                System.out.println("  " + p.getP_name() + ": " + p.getP_amount() + "주"));
-        } else {
-            System.out.println("  보유한 주식이 없습니다.");
-        }
-        System.out.println();
-    }
+    // 포트폴리오 요약 표시 
+	private static void showPortfolioSummary() {
+	    System.out.println("💼 현재 보유 주식:");
+	    
+	    if (model.getPortFolios() != null && !model.getPortFolios().isEmpty()) {
+	        // ✅ 수량이 0보다 큰 주식만 필터링해서 표시
+	        boolean hasValidStocks = false;
+	        
+	        for (var portfolio : model.getPortFolios()) {
+	            if (portfolio.getP_amount() > 0) {
+	                System.out.println("  " + portfolio.getP_name() + ": " + portfolio.getP_amount() + "주");
+	                hasValidStocks = true;
+	            }
+	        }
+	        
+	        // ✅ 수량이 0보다 큰 주식이 없으면 "보유한 주식이 없습니다" 표시
+	        if (!hasValidStocks) {
+	            System.out.println("  보유한 주식이 없습니다.");
+	        }
+	    } else {
+	        System.out.println("  보유한 주식이 없습니다.");
+	    }
+	    
+	    System.out.println();
+	}
 
     // 성공 메시지 출력
     public static void printSuccess(String message) {
