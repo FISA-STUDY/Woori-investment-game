@@ -16,7 +16,7 @@
 ---
 
 ### 👥 Woori FISA
-| [PM]최홍석 | 최소영 | 홍윤기 | 홍혜원 |
+| 최홍석 | 최소영 | 홍윤기 | 홍혜원 |
 | :---: | :---: | :---: | :---: |
 | <img width="160px" src="https://github.com/user-attachments/assets/e42318eb-0b49-4d00-8310-90fa23610a63"/>  | <img width="160px" src="https://github.com/user-attachments/assets/c3b12e03-53d2-43a2-8adc-4b32eaf2c66d" /> | <img width="160px" src="https://github.com/user-attachments/assets/8a15a7e7-6fff-45f3-903d-b82a4ec3c2bf"/> | <img width="160px" src="https://github.com/user-attachments/assets/029daed9-0514-45ed-98ed-ed4ec8b3384d"/> |
 | [@ChatHongPT](https://github.com/ChatHongPT) | [@ottffss1005](https://github.com/ottffss1005) | [@yunkihong-dev](https://github.com/yunkihong-dev?tab=followers) | [@hyewon8245](https://github.com/hyewon8245) |
