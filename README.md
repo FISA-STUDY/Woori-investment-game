@@ -60,7 +60,6 @@
 📦 Mini-Project
  ┣ 📂 src/
  ┃ ┣ 📂 controller/
- ┃ ┃ ┣ 📜 GameEngine.java
  ┃ ┃ ┣ 📜 MarketManager.java
  ┃ ┃ ┣ 📜 NewsGenerator.java
  ┃ ┃ ┗ 📜 TradeManager.java
@@ -137,7 +136,6 @@
 ## 🗂️ 주요 클래스 구조
 
 ### 🎮 Controller Layer
-- **GameEngine**: 게임 전체 진행 및 상태 관리
 - **MarketManager**: 주식 시장 데이터 관리
 - **NewsGenerator**: 뉴스 생성 및 주가 변동 적용
 - **TradeManager**: 주식 매매 로직 관리
