@@ -13,16 +13,12 @@ import util.DBUtil;
 
 public class PortfolioDAO {
 
-    private static PortfolioDAO portfolioDAO = PortfolioDAO.getPortfolioDAO();
+    private static final PortfolioDAO portfolioDAO = new PortfolioDAO();
 	
 	public static PortfolioDAO getPortfolioDAO() {
 		return portfolioDAO;
 	}
-    private static PortfolioDAO model = new PortfolioDAO();
-    public static PortfolioDAO getModel() {
-        return model;
-    }
-
+	
     private PortfolioDAO() {}
 	
     private String getCurrentUserName() {
@@ -73,13 +69,14 @@ public class PortfolioDAO {
 
 	        try {
 	            conn = DBUtil.getConnection();
-	            String sql = "INSERT INTO Portfolio (user_name, stock_name, stock_id, amount, price) VALUES (?, ?, ?, ?, ?)";
-	            pstmt = conn.prepareStatement(sql);
-	            pstmt.setString(1, pf.getUName());
-	            pstmt.setString(2, pf.getSName());
-	            pstmt.setLong(3, pf.getSId());
-	            pstmt.setInt(4, pf.getPAmount());
-	            pstmt.setInt(5, pf.getPPrice());
+	            String sql = "INSERT INTO Portfolio (p_price, p_amount, u_name, s_name, s_id) VALUES (?, ?, ?, ?, ?)";
+	            pstmt.setInt(1, pf.getPPrice());
+	            pstmt.setInt(2, pf.getPAmount());
+	            pstmt.setString(3, pf.getUName());
+	            pstmt.setString(4, pf.getSName());
+	            pstmt.setLong(5, pf.getSId());
+
+
 
 	            pstmt.executeUpdate();
 	        } catch (Exception e) {

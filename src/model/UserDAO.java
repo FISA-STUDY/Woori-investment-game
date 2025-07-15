@@ -125,7 +125,7 @@ public class UserDAO {
     }
 
     public List<PortFolio> getPortFolios() {
-        return PortfolioDAO.getModel().getPortFolios();
+        return PortfolioDAO.getPortfolioDAO().getPortFolios();
     }
 
 }

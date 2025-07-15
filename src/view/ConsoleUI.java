@@ -1,14 +1,12 @@
 package view;
 
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
 import controller.NewsGenerator;
 import controller.StockManager;
 import model.UserDAO;
-import model.domain.News;
 import model.domain.PortFolio;
 import model.domain.Stock;
 import model.domain.User;
@@ -198,50 +196,51 @@ public class ConsoleUI {
                 }
                 
                 // 주식 존재 여부 확인
-//                if(!StockManager.isValidStock(tradeInfo.stockName)) {
-//                    printError("존재하지 않는 주식입니다.");
-//                    continue;
-//                }
+                if(!StockManager.isValidStock(tradeInfo.stockName)) {
+                    printError("존재하지 않는 주식입니다.");
+                    continue;
+                }
                 
                 // 주식 가격 계산
-//                Stock targetStock = StockManager.getStockByName(tradeInfo.stockName);
-//                if (targetStock == null) {
-//                    printError("주식 정보를 불러올 수 없습니다.");
-//                    continue;
-//                }
-//                
-//                int totalCost = targetStock.getSPrice() * tradeInfo.quantity;
-//                
-//                System.out.println();
-//                System.out.println("📊 주문 정보");
-//                System.out.println("종목: " + tradeInfo.stockName);
-//                System.out.println("수량: " + tradeInfo.quantity + "주");
-//                System.out.println("단가: " + formatCurrency(targetStock.getSPrice()));
-//                System.out.println("총 금액: " + formatCurrency(totalCost));
-//                System.out.println();
+                Stock targetStock = StockManager.getStockByName(tradeInfo.stockName);
+                if (targetStock == null) {
+                    printError("주식 정보를 불러올 수 없습니다.");
+                    continue;
+                }
+                
+                int totalCost = targetStock.getSPrice() * tradeInfo.quantity;
+                
+                System.out.println();
+                System.out.println("📊 주문 정보");
+                System.out.println("종목: " + tradeInfo.stockName);
+                System.out.println("수량: " + tradeInfo.quantity + "주");
+                System.out.println("단가: " + formatCurrency(targetStock.getSPrice()));
+                System.out.println("총 금액: " + formatCurrency(totalCost));
+                System.out.println();
 //                
                 // 잔고 확인
-//                if(currentPlayer.getUWallet() < totalCost) {
-//                    printError("보유 자산이 부족합니다.");
-//                    System.out.println("필요 금액: " + formatCurrency(totalCost));
-//                    System.out.println("보유 자산: " + formatCurrency(currentPlayer.getUWallet()));
-//                    continue;
-//                }
-//                
-//                // 구매 확인
-//                if (confirmTransaction("구매")) {
-//                    if(StockManager.stockBuy(tradeInfo.stockName, tradeInfo.quantity)) {
-//                        printSuccess("주식 구매가 완료되었습니다!");
-//                        System.out.println("잔여 자산: " + formatCurrency(userDAO.getCurrentPlayer().getUWallet()));
-//                        return;
-//                    } else {
-//                        printError("주식 구매에 실패했습니다.");
-//                    }
-//                } else {
-//                    printInfo("구매를 취소했습니다.");
-//                }
+                if(currentPlayer.getUWallet() < totalCost) {
+                    printError("보유 자산이 부족합니다.");
+                    System.out.println("필요 금액: " + formatCurrency(totalCost));
+                    System.out.println("보유 자산: " + formatCurrency(currentPlayer.getUWallet()));
+                    continue;
+                }
+                
+                // 구매 확인
+                if (confirmTransaction("구매")) {
+                    if(StockManager.stockBuy(tradeInfo.stockName, tradeInfo.quantity)) {
+                        printSuccess("주식 구매가 완료되었습니다!");
+                        System.out.println("잔여 자산: " + formatCurrency(userDAO.getCurrentPlayer().getUWallet()));
+                        return;
+                    } else {
+                        printError("주식 구매에 실패했습니다.");
+                    }
+                } else {
+                    printInfo("구매를 취소했습니다.");
+                }
                 
             } catch(Exception e) {
+            	e.printStackTrace();
                 printError("입력 처리 중 오류가 발생했습니다.");
             }
         }
@@ -272,25 +271,25 @@ public class ConsoleUI {
                 }
                 
                 // 주식 존재 여부 확인
-//                if(!StockManager.isValidStock(tradeInfo.stockName)) {
-//                    printError("존재하지 않는 주식입니다.");
-//                    continue;
-//                }
+                if(!StockManager.isValidStock(tradeInfo.stockName)) {
+                    printError("존재하지 않는 주식입니다.");
+                    continue;
+                }
                 
                 // 매도 정보 표시
-//                Stock targetStock = StockManager.getStockByName(tradeInfo.stockName);
-//                if (targetStock != null) {
-//                    int totalValue = targetStock.getSPrice() * tradeInfo.quantity;
-//                    
-//                    System.out.println();
-//                    System.out.println("📊 매도 정보");
-//                    System.out.println("종목: " + tradeInfo.stockName);
-//                    System.out.println("수량: " + tradeInfo.quantity + "주");
-//                    System.out.println("현재가: " + formatCurrency(targetStock.getSPrice()));
-//                    System.out.println("예상 수익: " + formatCurrency(totalValue));
-//                    System.out.println();
-//                }
-//                
+                Stock targetStock = StockManager.getStockByName(tradeInfo.stockName);
+                if (targetStock != null) {
+                    int totalValue = targetStock.getSPrice() * tradeInfo.quantity;
+                    
+                    System.out.println();
+                    System.out.println("📊 매도 정보");
+                    System.out.println("종목: " + tradeInfo.stockName);
+                    System.out.println("수량: " + tradeInfo.quantity + "주");
+                    System.out.println("현재가: " + formatCurrency(targetStock.getSPrice()));
+                    System.out.println("예상 수익: " + formatCurrency(totalValue));
+                    System.out.println();
+                }
+                
                 // 매도 확인
 //                if (confirmTransaction("판매")) {
 //                    if(StockManager.stockSell(tradeInfo.stockName, tradeInfo.quantity)) {

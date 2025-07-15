@@ -4,25 +4,18 @@ import java.util.List;
 
 import model.PortfolioDAO;
 import model.UserDAO;
-import model.PortfolioDAO;
 import model.domain.PortFolio;
 import model.domain.Stock;
 import model.domain.User;
 
 public class MarketManager {
    //포트폴리오 가져와서 전체 수량, 가격 정리
-<<<<<<< HEAD
-//   private List<Portfolio> portfolios = new ArrayList<>();
-   private static UserDAO model = UserDAO.getModel();
    
-=======
    private static UserDAO userDAO = UserDAO.getModel();
    private static PortfolioDAO portfolioDAO = PortfolioDAO.getPortfolioDAO();
->>>>>>> 4136eab5c143647f40f2142499dcccbdfd90ffec
    
    void buyStock(Stock stock, int num){
 	   boolean found = false;
-	   
 	      for(PortFolio portfolio : portfolioDAO.getPortFolios()){
 	    	if(portfolio.getSName().equals(stock.getSName())){
 	            int now_price = (portfolio.getPPrice()*portfolio.getPAmount() + stock.getSPrice()*num)/(portfolio.getPAmount() +num);
@@ -42,7 +35,7 @@ public class MarketManager {
 	    			    (long) stock.getSId()                // sId
 	    			);
 
-	    	  portfolioDAO.updatePortfolio(pf);
+	    	  portfolioDAO.insertPortfolio(pf);
 	      }
    }
    boolean sellStock(Stock stock, int num) {
