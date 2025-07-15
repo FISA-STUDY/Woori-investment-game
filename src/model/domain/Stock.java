@@ -13,9 +13,12 @@ import lombok.Setter;
 @NonNull
 public class Stock {
 	@NonNull
+	private int sId;
+	@NonNull
 	private String sName;
 	@NonNull
 	private int sPrice;
+	
 	private double sGraph;
-	private int sAmount;
+	
 }

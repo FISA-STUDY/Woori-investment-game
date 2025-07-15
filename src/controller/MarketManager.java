@@ -2,7 +2,7 @@ package controller;
 
 import java.util.List;
 
-import model.Model;
+import model.UserDAO;
 import model.domain.PortFolio;
 import model.domain.Stock;
 import model.domain.User;
@@ -10,8 +10,8 @@ import model.domain.User;
 public class MarketManager {
    //포트폴리오 가져와서 전체 수량, 가격 정리
 //   private List<Portfolio> portfolios = new ArrayList<>();
-   private static List<PortFolio>  portfolios = Model.getPortFolios();
-   private static Model model = Model.getModel();
+   private static List<PortFolio>  portfolios = UserDAO.getPortFolios();
+   private static UserDAO model = UserDAO.getModel();
    
    
    void buyStock(Stock stock, int num){
@@ -61,10 +61,10 @@ public class MarketManager {
        
        for (PortFolio portfolio : playerPortfolios) {
            // 현재 주가로 계산
-           Stock currentStock = StockManager.getStockByName(portfolio.getPName());
-           if (currentStock != null) {
-               totalValue += currentStock.getSPrice() * portfolio.getPAmount();
-           }
+//           Stock currentStock = StockManager.getStockByName(portfolio.getPName());
+//           if (currentStock != null) {
+//               totalValue += currentStock.getSPrice() * portfolio.getPAmount();
+//           }
        }
        
        return totalValue;

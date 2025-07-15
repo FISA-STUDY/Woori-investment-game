@@ -2,12 +2,12 @@ package Run;
 
 import model.domain.User;
 import view.ConsoleUI;
-import model.Model;
+import model.UserDAO;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            Model model = Model.getModel();
+            UserDAO model = UserDAO.getModel();
 
             User player = ConsoleUI.createPlayer();
             int currentDay = 1;

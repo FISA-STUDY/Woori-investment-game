@@ -1,12 +1,11 @@
 package controller;
 
-import model.Database;
 import model.domain.News;
 
 public class NewsGenerator {
     
     public News generateNews() {
-        return Database.getRandomNews();
+        return null;
     }
     
  
@@ -15,7 +14,7 @@ public class NewsGenerator {
         News todayNews = generateNews();
         
         // 2. 뉴스에 따른 주식 가격 변동 적용
-        StockManager.priceChange(todayNews);
+//        StockManager.priceChange(todayNews);
         
         return todayNews;
     }
@@ -26,7 +25,7 @@ public class NewsGenerator {
         for (int i = 0; i < count; i++) {
             dailyNews[i] = generateNews();
             // 각 뉴스마다 주식 가격 변동 적용
-            StockManager.priceChange(dailyNews[i]);
+//            StockManager.priceChange(dailyNews[i]);
         }
         
         return dailyNews;

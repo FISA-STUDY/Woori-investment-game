@@ -8,30 +8,27 @@ import model.domain.User;
 import java.util.List;
 
 
-public class Model {
-    private static Database db = new Database();
+public class UserDAO {
 
 	private User currentPlayer;
     
-    private static Model model = new Model();
+    private static UserDAO model = new UserDAO();
     
-    // 게임 상수
-    private static final int INITIAL_WALLET = 1000000; // 초기 자산 100만원
-    
-    public static Model getModel() {
+    public static UserDAO getModel() {
         return model;
     }
     
-    private Model() {}
+    private UserDAO() {}
     
     // News 관련 메서드
     public News[] getNewses() {
-        return db.getNews();
+//        return db.getNews();
+        return null;
     }
         
     // 새 플레이어 생성 (초기 자산 100만원)
     public User createNewPlayer(String playerName) {
-        this.currentPlayer = new User(playerName, INITIAL_WALLET);
+        this.currentPlayer = new User(playerName);
         return currentPlayer;
     }
     
@@ -61,7 +58,8 @@ public class Model {
     }
     
     public static List<PortFolio> getPortFolios(){
-        return db.getPortFolios();
+//        return db.getPortFolios();
+    	return null;
      }
     
 }
