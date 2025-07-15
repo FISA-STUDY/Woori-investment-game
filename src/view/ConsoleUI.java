@@ -4,17 +4,23 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Scanner;
 
+import controller.MarketManager;
 import controller.NewsGenerator;
 import controller.StockManager;
 import model.UserDAO;
 import model.domain.News;
 import model.domain.Stock;
 import model.domain.User;
+import model.dto.NewsStockPair;
 
 public class ConsoleUI {
     private static Scanner scanner = new Scanner(System.in);
     private static final NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.KOREA);
     private static UserDAO model = UserDAO.getModel();
+    private static MarketManager marketManager = new MarketManager();
+    private static NewsGenerator newsGenerator = new NewsGenerator();
+    private static StockManager stockManager = new StockManager();
+    
     
     // 게임 시작 - 플레이어 생성
     public static User createPlayer() {
@@ -357,8 +363,9 @@ public class ConsoleUI {
             model.incrementDay();
             
             // 2. 뉴스 생성 및 주식 가격 변동 적용
-            NewsGenerator newsGenerator = new NewsGenerator();
-            News todayNews = newsGenerator.generateNewsAndApplyPriceChange();
+            NewsStockPair todayNews = newsGenerator.generateNews();
+            stockManager.priceChange(todayNews);
+            
             
             // 3. 뉴스 표시
             if (todayNews != null) {
@@ -382,14 +389,14 @@ public class ConsoleUI {
     /**
      * 일일 뉴스 표시 (뉴스 객체를 직접 받아서 표시)
      */
-    private static void displayDailyNews(News todayNews) {
+    private static void displayDailyNews(NewsStockPair todayNews) {
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("             📰 오늘의 뉴스 📰              ");
         System.out.println("╚════════════════════════════════════════╝");
-        System.out.println("🏢 관련 기업: " + todayNews.getSName());
-        System.out.println((todayNews.getNIsGood() ? "📈 호재" : "📉 악재") + " 뉴스");
+        System.out.println("🏢 관련 기업: " + todayNews.getStock().getSName());
+        System.out.println((todayNews.getNews().getNIsGood() ? "📈 호재" : "📉 악재") + " 뉴스");
         System.out.println();
-        System.out.println(todayNews.getNMessage());
+        System.out.println(todayNews.getNews().getNMessage());
         System.out.println();
         System.out.println("💹 주식 가격 변동:");
     }

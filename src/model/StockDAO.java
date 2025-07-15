@@ -11,11 +11,12 @@ import util.DBUtil;
 
 public class StockDAO {
    
+   private static StockDAO stockDAO = new StockDAO();
    
-   private static StockDAO stmodel = new StockDAO();
    public StockDAO() {} 
-   public static StockDAO getModel() {
-      return stmodel;
+   
+   public static StockDAO getStockDAO() {
+      return stockDAO;
    }
    
    public ArrayList<Stock> getStock() throws Exception{
@@ -29,7 +30,7 @@ public class StockDAO {
 			rs=stmt.executeQuery("select * from Stock");
 
 			
-			all = new ArrayList<>(); // 10개의 메모리 증가
+			all = new ArrayList<>();
 			while(rs.next()) {	
 				all.add(new Stock(rs.getInt("s_id"),
 									rs.getString("s_name"),
@@ -40,6 +41,28 @@ public class StockDAO {
 			DBUtil.close(conn, stmt,rs);
 		}
 		return all;
+   }
+   
+   public Stock getOneRandomStock() throws Exception{
+	   Connection conn = null;
+	   Statement stmt = null;
+	   ResultSet rs = null;
+	   Stock stock = null;
+	   try {
+		   conn = DBUtil.getConnection();
+		   stmt=conn.createStatement();
+		   rs=stmt.executeQuery("select * from Stock ORDER BY RAND() limit 1");
+		   
+		   
+		   stock = new Stock(rs.getInt("s_id"),
+					   rs.getString("s_name"),
+					   rs.getInt("s_price"),
+					   rs.getDouble("s_graph"));
+		   
+	   } finally {
+		   DBUtil.close(conn, stmt,rs);
+	   }
+	   return stock;
    }
 
 }

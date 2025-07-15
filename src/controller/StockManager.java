@@ -7,19 +7,20 @@ import model.UserDAO;
 import model.domain.News;
 import model.domain.Stock;
 import model.domain.User;
+import model.dto.NewsStockPair;
 
 public class StockManager {
     
-    private static StockDAO stockDAO = StockDAO.getModel();
+    private static StockDAO stockDAO = StockDAO.getStockDAO();
     private static MarketManager marketManager = new MarketManager();
     private static UserDAO model = UserDAO.getModel();
     
-    public static void priceChange(News n){
+    public static void priceChange(NewsStockPair newsStockPair){
         try {
 			for(Stock stock : stockDAO.getStock()) {
 			    double rate;
 			    
-			    if(n.getSName().equals(stock.getSName())) {
+			    if(s.getSName().equals(stock.getSName())) {
 			        // 뉴스에 언급된 주식
 			        if(n.getNIsGood()) {
 			            rate = Math.random() * 0.2; // 0 ~ 0.2 (상승)

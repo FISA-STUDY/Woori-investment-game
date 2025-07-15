@@ -29,21 +29,17 @@ public class NewsDAO {
 			rs=stmt.executeQuery("select * from News ORDER BY RAND() limit 1");
 			
 			
-			news = new News(); // 10개의 메모리 증가
-			new News(rs.getInt("empno"),
-			rs.getString("ename"),
-			rs.getInt("deptno")));
-			}
+			news = new News(rs.getInt("id"),
+			rs.getBoolean("n_isGood"),
+			rs.getString("n_message"));
 		} catch (Exception e) {
-			
 			e.printStackTrace();
-			
 		}finally {
 			
 			DBUtil.close(conn,stmt,rs);
 			
 		}
-		return all;
+		return news;
 	}
     
 	
