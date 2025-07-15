@@ -21,6 +21,10 @@
 
 ---
 
+ERD
+
+<img width="1070" height="562" alt="모의투자게임 (4)" src="https://github.com/user-attachments/assets/7153c4ae-ce07-48d3-b84b-a564e194619d" />
+
 ## 📁 실제 프로젝트 구조
 
 ```
@@ -159,7 +163,7 @@ java -cp target src.Run.Main
 
 ## 🏗️ 시스템 아키텍처
 
-![시스템 아키텍처](docs/architecture.png)
+<img width="700" height="459" alt="스크린샷 2025-07-16 오전 8 35 32" src="https://github.com/user-attachments/assets/f584a406-dc38-417a-a26e-321f53dda149" />
 
 ---
 
