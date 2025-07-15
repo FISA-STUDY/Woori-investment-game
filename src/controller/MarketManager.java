@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 
 import model.UserDAO;
+import model.PortfolioDAO;
 import model.domain.PortFolio;
 import model.domain.Stock;
 import model.domain.User;
@@ -10,12 +11,12 @@ import model.domain.User;
 public class MarketManager {
    //포트폴리오 가져와서 전체 수량, 가격 정리
 //   private List<Portfolio> portfolios = new ArrayList<>();
-   private static List<PortFolio>  portfolios = UserDAO.getPortFolios();
+   private static List<PortFolio>  portfolios = PortfolioDAO.getPortFolios();
    private static UserDAO model = UserDAO.getModel();
    
    
    void buyStock(Stock stock, int num){
-	   boolean found = false;
+	   String userName = model.getCurrentPlayer().getUName();
 	   
 	      for(PortFolio portfolio : portfolios){
 	    	if(portfolio.getPName().equals(stock.getSName())){

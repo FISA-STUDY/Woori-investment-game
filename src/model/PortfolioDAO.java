@@ -12,6 +12,13 @@ import util.DBUtil;
 
 public class PortfolioDAO {
 	
+    private static PortfolioDAO model = new PortfolioDAO();
+    public static PortfolioDAO getModel() {
+        return model;
+    }
+
+    private PortfolioDAO() {}
+	
 	public List<PortFolio> getPortFolios() {
         Connection conn = null;
         Statement stmt = null;
