@@ -53,12 +53,13 @@ public class StockDAO {
 		   stmt=conn.createStatement();
 		   rs=stmt.executeQuery("select * from Stock ORDER BY RAND() limit 1");
 		   
-		   
+
+	        if (rs.next()) { // 커서 이동 필수
 		   stock = new Stock(rs.getInt("s_id"),
 					   rs.getString("s_name"),
 					   rs.getInt("s_price"),
 					   rs.getDouble("s_graph"));
-		   
+	        }
 	   } finally {
 		   DBUtil.close(conn, stmt,rs);
 	   }
