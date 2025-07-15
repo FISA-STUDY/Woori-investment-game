@@ -16,7 +16,7 @@ public class ConsoleUI {
     private static final NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.KOREA);
     private static UserDAO model = UserDAO.getModel();
   
-    public static void loginMenu() {
+    public static User loginMenu() {
         Scanner scanner = new Scanner(System.in);
         UserDAO model = UserDAO.getModel();
         
@@ -36,7 +36,7 @@ public class ConsoleUI {
 
                     if (model.login(loginId, loginPwd)) {
                         printSuccess("로그인 성공!");
-                        return; // 로그인 성공 → main으로 진행
+                        return model.getCurrentPlayer(); // 로그인한 사용자 반환
                     } else {
                         printError("로그인 실패. 아이디 또는 비밀번호가 틀렸습니다.");
                     }
