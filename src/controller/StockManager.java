@@ -20,9 +20,9 @@ public class StockManager {
 			for(Stock stock : stockDAO.getStock()) {
 			    double rate;
 			    
-			    if(s.getSName().equals(stock.getSName())) {
+			    if(newsStockPair.getStock().getSName().equals(stock.getSName())) {
 			        // 뉴스에 언급된 주식
-			        if(n.getNIsGood()) {
+			        if(newsStockPair.getNews().getNIsGood()) {
 			            rate = Math.random() * 0.2; // 0 ~ 0.2 (상승)
 			            stock.setSPrice((int)(stock.getSPrice() * (1 + rate)));
 			            System.out.println("📈 " + stock.getSName() + " 주가 상승: +" + String.format("%.1f", rate * 100) + "%");
@@ -99,13 +99,8 @@ public class StockManager {
 //        return null;
 //    }
 //    
-    public static ArrayList<Stock> showStocks() {
-        try {
+    public static ArrayList<Stock> showStocks() throws Exception{
 			return stockDAO.getStock();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
     }
     
     // 추가 유틸리티 메서드들

@@ -59,14 +59,19 @@ public class ConsoleUI {
         System.out.printf("  %-18s  %-12s  %-10s ", "📈 종목명", "💰 현재가", "📊 가격 동향 \n");
         System.out.println("╠═══════════════════════════════════════════════════════════════════════════╣");
 
-        for (Stock s : StockManager.showStocks()) {
-            String stockName = s.getSName();
-            String price = formatCurrency(s.getSPrice());
-            double graph = s.getSGraph();
+        try {
+			for (Stock s : StockManager.showStocks()) {
+			    String stockName = s.getSName();
+			    String price = formatCurrency(s.getSPrice());
+			    double graph = s.getSGraph();
 
-            System.out.printf("  %-18s  %-12s  %-10.2f", stockName, price, graph);
-            System.out.println();
-        }
+			    System.out.printf("  %-18s  %-12s  %-10.2f", stockName, price, graph);
+			    System.out.println();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("500 서버에 문제가 생겼어요");
+		}
 
         System.out.println("╚═══════════════════════════════════════════════════════════════════════════╝");
     }
