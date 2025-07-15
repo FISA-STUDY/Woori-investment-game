@@ -20,12 +20,12 @@ public class User {
     @NonNull
     private String uPassword;  
 
-    private long uWallet = 1000000; 
+    private long uWallet;
     
     // 커스텀 생성자 (회원가입 시 사용)
     public User(String uName, String uPassword) {
         this.uName = uName;
         this.uPassword = uPassword;
-        this.uWallet = 1000000L;
+        this.uWallet = uWallet;
     }
 }
