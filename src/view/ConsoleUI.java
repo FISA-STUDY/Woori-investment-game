@@ -17,6 +17,7 @@ public class ConsoleUI {
     private static Scanner scanner = new Scanner(System.in);
     private static final NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.KOREA);
     private static UserDAO model = UserDAO.getModel();
+<<<<<<< HEAD
     private static MarketManager marketManager = new MarketManager();
     private static NewsGenerator newsGenerator = new NewsGenerator();
     private static StockManager stockManager = new StockManager();
@@ -50,6 +51,9 @@ public class ConsoleUI {
         
         return newUser;
     }
+=======
+  
+>>>>>>> 9c54e19 (feat: 로그인/회원가입 기능 구현)
     
     public static void printStocks() {
         System.out.println();
@@ -140,7 +144,7 @@ public class ConsoleUI {
             return;
         }
         
-        System.out.println("💰 보유 자산: " + formatCurrency(currentPlayer.getUWallet()));
+//        System.out.println("💰 보유 자산: " + formatCurrency(currentPlayer.getUWallet()));
         System.out.println();
         
         // 주식 목록 표시
@@ -328,7 +332,7 @@ public class ConsoleUI {
         System.out.println("👤 플레이어 정보");
         System.out.println("────────────────────────────────────────");
         System.out.println("이름: " + user.getUName());
-        System.out.println("보유 자산: " + formatCurrency(user.getUWallet()));
+//        System.out.println("보유 자산: " + formatCurrency(user.getUWallet()));
         System.out.println();
     }
     
@@ -340,8 +344,8 @@ public class ConsoleUI {
         }
         
         System.out.println("============================================================");
-        System.out.printf("📅 %d일차 | 👤 %s | 💰 %s%n", 
-                         day, user.getUName(), formatCurrency(user.getUWallet()));
+//        System.out.printf("📅 %d일차 | 👤 %s | 💰 %s%n", 
+//                         day, user.getUName(), formatCurrency(user.getUWallet()));
         System.out.println("============================================================");
     }
     
@@ -456,6 +460,75 @@ public class ConsoleUI {
         printPrompt("계속하려면 Enter를 누르세요");
         scanner.nextLine();
     }
+    
+    public static User createPlayer() {
+        printTitle();
+        printPrompt("플레이어 이름을 입력하세요");
+        String playerName = scanner.nextLine();
+
+        User newUser = model.createNewPlayer(playerName); // 🔑 여기서 currentPlayer 설정
+        printSuccess("환영합니다, " + newUser.getUName() + "님!");
+        return newUser;
+    }
+
+    public static boolean loginMenu() {
+        printTitle();
+        System.out.println("1. 로그인");
+        System.out.println("2. 회원가입");
+        System.out.println("0. 종료");
+
+        while (true) {
+            printPrompt("선택하세요");
+            String input = scanner.nextLine();
+
+            switch (input) {
+                case "1":
+                    return login();
+                case "2":
+                    return register();
+                case "0":
+                    printInfo("게임을 종료합니다.");
+                    System.exit(0);
+                default:
+                    printWarning("올바른 숫자를 입력해주세요.");
+            }
+        }
+    }
+
+    private static boolean login() {
+        printPrompt("아이디를 입력하세요");
+        String id = scanner.nextLine();
+
+        printPrompt("비밀번호를 입력하세요");
+        String pw = scanner.nextLine();
+
+        boolean result = model.login(id, pw);
+        if (result) {
+            printSuccess("로그인 성공! 환영합니다 " + model.getCurrentPlayer().getUName() + "님");
+            return true;
+        } else {
+            printError("로그인 실패. 아이디나 비밀번호를 확인해주세요.");
+            return false;
+        }
+    }
+
+    private static boolean register() {
+        printPrompt("새 아이디를 입력하세요");
+        String id = scanner.nextLine();
+
+        printPrompt("비밀번호를 입력하세요");
+        String pw = scanner.nextLine();
+
+        boolean result = model.register(id, pw);
+        if (result) {
+            printSuccess("회원가입 성공! 다시 로그인 해주세요.");
+            return false; // 로그인 필요
+        } else {
+            printError("회원가입 실패. 이미 존재하는 아이디입니다.");
+            return false;
+        }
+    }
+	
     
     // 포트폴리오 요약 표시 
 	private static void showPortfolioSummary() {
