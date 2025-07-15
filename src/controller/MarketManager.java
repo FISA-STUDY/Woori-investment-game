@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import model.PortfolioDAO;
 import model.UserDAO;
 import model.PortfolioDAO;
 import model.domain.PortFolio;
@@ -10,33 +11,43 @@ import model.domain.User;
 
 public class MarketManager {
    //포트폴리오 가져와서 전체 수량, 가격 정리
+<<<<<<< HEAD
 //   private List<Portfolio> portfolios = new ArrayList<>();
    private static UserDAO model = UserDAO.getModel();
    
+=======
+   private static UserDAO userDAO = UserDAO.getModel();
+   private static PortfolioDAO portfolioDAO = PortfolioDAO.getPortfolioDAO();
+>>>>>>> 4136eab5c143647f40f2142499dcccbdfd90ffec
    
    void buyStock(Stock stock, int num){
-	   String userName = model.getCurrentPlayer().getUName();
+	   boolean found = false;
 	   
-	      for(PortFolio portfolio : portfolios){
-	    	if(portfolio.getPName().equals(stock.getSName())){
+	      for(PortFolio portfolio : portfolioDAO.getPortFolios()){
+	    	if(portfolio.getSName().equals(stock.getSName())){
 	            int now_price = (portfolio.getPPrice()*portfolio.getPAmount() + stock.getSPrice()*num)/(portfolio.getPAmount() +num);
 	            portfolio.setPPrice(now_price);
 	            portfolio.setPAmount(portfolio.getPAmount()+num);
-	            PortFolio pf = new PortFolio(stock.getSName(), num, stock.getSPrice(), model.getCurrentPlayer().getUName());
 	            found = true;
-	            portfolios.add(pf);
-
-	            
+	            portfolioDAO.updatePortfolio(portfolio);
 	      }
 	}
 	      if(!found) {
-	    	  PortFolio pf = new PortFolio(stock.getSName(), num, stock.getSPrice(), model.getCurrentPlayer().getUName());
-	    	  portfolios.add(pf);
+	    	  PortFolio pf = new PortFolio(
+	    			    null,                                // pId (auto_increment)
+	    			    stock.getSPrice(),                   // pPrice
+	    			    num,                                 // pAmount
+	    			    userDAO.getCurrentPlayer().getUName(), // uName
+	    			    stock.getSName(),                    // sName
+	    			    (long) stock.getSId()                // sId
+	    			);
+
+	    	  portfolioDAO.updatePortfolio(pf);
 	      }
    }
    boolean sellStock(Stock stock, int num) {
-	    for(PortFolio portfolio : portfolios) {
-	        if(portfolio.getPName().equals(stock.getSName())) {
+	    for(PortFolio portfolio : portfolioDAO.getPortFolios()) {
+	        if(portfolio.getSName().equals(stock.getSName())) {
 	            if(portfolio.getPAmount() < num) {
 	                System.out.println("판매할 개수가 보유량보다 클 수 없습니다.");
 	                return false;
@@ -45,7 +56,7 @@ public class MarketManager {
 	            // 수량 감소
 	            portfolio.setPAmount(portfolio.getPAmount() - num);
 	            if(portfolio.getPAmount() == 0) {
-	            	portfolios.remove(portfolio);
+	            	portfolioDAO.deletePortfolio(userDAO.getCurrentPlayer().getUName(), stock.getSName());
 	            }
 	            // 평균 단가는 매도 시 갱신하지 않음
 
@@ -56,7 +67,7 @@ public class MarketManager {
 	}
 
    public static int calculateTotalPortfolioValue() {
-       List<PortFolio> playerPortfolios = portfolios;
+       List<PortFolio> playerPortfolios = portfolioDAO.getPortFolios();
        int totalValue = 0;
        
        for (PortFolio portfolio : playerPortfolios) {
@@ -70,12 +81,12 @@ public class MarketManager {
        return totalValue;
    }
    public static int calculateTotalAsset() {
-       User currentPlayer = model.getCurrentPlayer();
-       return currentPlayer.getUWallet() + calculateTotalPortfolioValue();
+       User currentPlayer = userDAO.getCurrentPlayer();
+       return (int) (currentPlayer.getUWallet() + calculateTotalPortfolioValue());
    }
    
    public static List<PortFolio> showPortfolio(){
-	   return portfolios;
+	   return portfolioDAO.getPortFolios();
    }
    
 }

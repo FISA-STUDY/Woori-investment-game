@@ -12,7 +12,12 @@ import model.domain.User;
 import util.DBUtil;
 
 public class PortfolioDAO {
+
+    private static PortfolioDAO portfolioDAO = PortfolioDAO.getPortfolioDAO();
 	
+	public static PortfolioDAO getPortfolioDAO() {
+		return portfolioDAO;
+	}
     private static PortfolioDAO model = new PortfolioDAO();
     public static PortfolioDAO getModel() {
         return model;
@@ -122,4 +127,5 @@ public class PortfolioDAO {
 	            DBUtil.close(conn, pstmt, null);
 	        }
 	    }
+
 	}
