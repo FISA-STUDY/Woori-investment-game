@@ -59,6 +59,7 @@ public class ConsoleUI {
                     String regPwd = scanner.nextLine();
 
                     if (model.register(regId, regPwd)) {
+                        System.out.println();
                         printSuccess("회원가입 성공! 이제 로그인하세요.");
                         System.out.println();
                     } else {
