@@ -439,7 +439,7 @@ public class ConsoleUI {
     
     public static void showPortfolio() {
         System.out.println();
-        System.out.println("📈 포트폴리오");
+        System.out.println("📈 " + model.getCurrentPlayer().getUName() + "님의 포트폴리오");
         System.out.println("────────────────────────────────────────");
         
         User currentPlayer = model.getCurrentPlayer();
@@ -454,7 +454,7 @@ public class ConsoleUI {
         // 포트폴리오 정보 표시
         List<PortFolio> portfolios = model.getPortFolios();
         if (portfolios != null && !portfolios.isEmpty()) {
-            System.out.println("📊 보유 주식:");
+            System.out.println("📊 " + model.getCurrentPlayer().getUName() + "님의 보유 주식:");
             System.out.println("╔════════════════════════════════════════════════════════════════╗");
             System.out.printf("  %-15s  %-8s  %-12s  %-12s%n", "종목명", "수량", "평단가", "현재가치");
             System.out.println("╠════════════════════════════════════════════════════════════════╣");
