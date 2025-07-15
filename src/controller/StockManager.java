@@ -13,31 +13,36 @@ public class StockManager {
     private static StockDAO stockDAO = StockDAO.getModel();
     private static MarketManager marketManager = new MarketManager();
     private static UserDAO model = UserDAO.getModel();
-//    
-//    public static void priceChange(News n) {
-//        for(Stock stock : stmodel.getStock()) {
-//            double rate;
-//            
-//            if(n.getSName().equals(stock.getSName())) {
-//                // 뉴스에 언급된 주식
-//                if(n.getNIsGood()) {
-//                    rate = Math.random() * 0.2; // 0 ~ 0.2 (상승)
-//                    stock.setSPrice((int)(stock.getSPrice() * (1 + rate)));
-//                    System.out.println("📈 " + stock.getSName() + " 주가 상승: +" + String.format("%.1f", rate * 100) + "%");
-//                } else {
-//                    rate = Math.random() * 0.2; // 0 ~ 0.2 (하락)
-//                    stock.setSPrice((int)(stock.getSPrice() * (1 - rate)));
-//                    System.out.println("📉 " + stock.getSName() + " 주가 하락: -" + String.format("%.1f", rate * 100) + "%");
-//                }
-//                stock.setSGraph(rate);
-//            } else {
-//                // 다른 주식들의 소폭 랜덤 변동
-//                rate = (Math.random() - 0.5) * 0.1; // -0.05 ~ 0.05
-//                stock.setSPrice((int)(stock.getSPrice() * (1 + rate)));
-//                stock.setSGraph(Math.abs(rate));
-//            }
-//        }
-//    }
+    
+    public static void priceChange(News n){
+        try {
+			for(Stock stock : stockDAO.getStock()) {
+			    double rate;
+			    
+			    if(n.getSName().equals(stock.getSName())) {
+			        // 뉴스에 언급된 주식
+			        if(n.getNIsGood()) {
+			            rate = Math.random() * 0.2; // 0 ~ 0.2 (상승)
+			            stock.setSPrice((int)(stock.getSPrice() * (1 + rate)));
+			            System.out.println("📈 " + stock.getSName() + " 주가 상승: +" + String.format("%.1f", rate * 100) + "%");
+			        } else {
+			            rate = Math.random() * 0.2; // 0 ~ 0.2 (하락)
+			            stock.setSPrice((int)(stock.getSPrice() * (1 - rate)));
+			            System.out.println("📉 " + stock.getSName() + " 주가 하락: -" + String.format("%.1f", rate * 100) + "%");
+			        }
+			        stock.setSGraph(rate);
+			    } else {
+			        // 다른 주식들의 소폭 랜덤 변동
+			        rate = (Math.random() - 0.5) * 0.1; // -0.05 ~ 0.05
+			        stock.setSPrice((int)(stock.getSPrice() * (1 + rate)));
+			        stock.setSGraph(Math.abs(rate));
+			    }
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 //    
 //    public static boolean stockBuy(String stockName, int num) {
 //        if (num <= 0) {

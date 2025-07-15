@@ -21,6 +21,4 @@ public class News {
     @NonNull
     private String nMessage;
     
-    @NonNull
-    private String sName;
 }
