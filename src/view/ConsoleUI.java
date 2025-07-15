@@ -1,12 +1,14 @@
 package view;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
 import controller.NewsGenerator;
 import controller.StockManager;
 import model.UserDAO;
+import model.domain.News;
 import model.domain.PortFolio;
 import model.domain.Stock;
 import model.domain.User;
@@ -16,6 +18,7 @@ public class ConsoleUI {
     private static Scanner scanner = new Scanner(System.in);
     private static final NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.KOREA);
     private static UserDAO userDAO = UserDAO.getModel();
+    private static final StockManager stockManager = new StockManager();
   
     public static User loginMenu() {
         Scanner scanner = new Scanner(System.in);
@@ -98,8 +101,8 @@ public class ConsoleUI {
 			    System.out.println();
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 				System.out.println("서버에 문제가 생겼어요..");
+				e.printStackTrace();
 		}
 
         System.out.println("╚═══════════════════════════════════════════════════════════════════════════╝");
@@ -217,7 +220,7 @@ public class ConsoleUI {
                 System.out.println("단가: " + formatCurrency(targetStock.getSPrice()));
                 System.out.println("총 금액: " + formatCurrency(totalCost));
                 System.out.println();
-//                
+                
                 // 잔고 확인
                 if(currentPlayer.getUWallet() < totalCost) {
                     printError("보유 자산이 부족합니다.");
@@ -225,7 +228,7 @@ public class ConsoleUI {
                     System.out.println("보유 자산: " + formatCurrency(currentPlayer.getUWallet()));
                     continue;
                 }
-                
+               
                 // 구매 확인
                 if (confirmTransaction("구매")) {
                     if(StockManager.stockBuy(tradeInfo.stockName, tradeInfo.quantity)) {
@@ -240,8 +243,9 @@ public class ConsoleUI {
                 }
                 
             } catch(Exception e) {
-            	e.printStackTrace();
                 printError("입력 처리 중 오류가 발생했습니다.");
+                e.printStackTrace();  // ← 실제 에러 메시지를 콘솔에서 확인 가능하게 추가
+
             }
         }
     }
@@ -290,18 +294,18 @@ public class ConsoleUI {
                     System.out.println();
                 }
                 
-                // 매도 확인
-//                if (confirmTransaction("판매")) {
-//                    if(StockManager.stockSell(tradeInfo.stockName, tradeInfo.quantity)) {
-//                        printSuccess("주식 판매가 완료되었습니다!");
-//                        System.out.println("현재 자산: " + formatCurrency(userDAO.getCurrentPlayer().getUWallet()));
-//                        return;
-//                    } else {
-//                        printError("주식 판매에 실패했습니다.");
-//                    }
-//                } else {
-//                    printInfo("판매를 취소했습니다.");
-//                }
+                //매도확인
+                if (confirmTransaction("판매")) {
+                    if(StockManager.stockSell(tradeInfo.stockName, tradeInfo.quantity)) {
+                        printSuccess("주식 판매가 완료되었습니다!");
+                        System.out.println("현재 자산: " + formatCurrency(userDAO.getCurrentPlayer().getUWallet()));
+                        return;
+                    } else {
+                        printError("주식 판매에 실패했습니다.");
+                    }
+                } else {
+                    printInfo("판매를 취소했습니다.");
+                }
                 
             } catch(Exception e) {
                 printError("입력 처리 중 오류가 발생했습니다.");
@@ -375,8 +379,8 @@ public class ConsoleUI {
         }
         
         System.out.println("============================================================");
-//        System.out.printf("📅 %d일차 | 👤 %s | 💰 %s%n", 
-//                         day, user.getUName(), formatCurrency(user.getUWallet()));
+        System.out.printf("📅 %d일차 | 👤 %s | 💰 %s%n", 
+                         day, user.getUName(), formatCurrency(user.getUWallet()));
         System.out.println("============================================================");
     }
     
@@ -400,7 +404,7 @@ public class ConsoleUI {
             // 2. 뉴스 생성 및 주식 가격 변동 적용
             NewsGenerator newsGenerator = new NewsGenerator();
             NewsStockPair todayNews = newsGenerator.generateNews();
-            
+            stockManager.priceChange(todayNews);
             // 3. 뉴스 표시
             if (todayNews != null) {
                 displayDailyNews(todayNews);
@@ -413,6 +417,7 @@ public class ConsoleUI {
             
         } catch (Exception e) {
             printError("날짜 진행 중 오류가 발생했습니다.");
+            e.printStackTrace();  // ← 실제 에러 메시지를 콘솔에서 확인 가능하게 추가
         }
         
         // 아무 키나 누르면 계속
@@ -435,7 +440,7 @@ public class ConsoleUI {
         System.out.println("💹 주식 가격 변동:");
     }
     
-    public static void showPortfolio() {
+    public static void showPortfolio() throws Exception {
         System.out.println();
         System.out.println("📈 포트폴리오");
         System.out.println("────────────────────────────────────────");
@@ -463,15 +468,15 @@ public class ConsoleUI {
                 int buyPrice = portfolio.getPPrice();
                 
                 // 현재 주식 가격 가져오기
-//                Stock currentStock = StockManager.getStockByName(stockName);
-//                int currentPrice = (currentStock != null) ? currentStock.getSPrice() : buyPrice;
-//                int currentValue = currentPrice * quantity;
-//                totalStockValue += currentValue;
-//                
-//                System.out.printf("  %-15s  %-8d  %-12s  %-12s%n", 
-//                                stockName, quantity, 
-//                                formatCurrency(buyPrice), 
-//                                formatCurrency(currentValue));
+                Stock currentStock = StockManager.getStockByName(stockName);
+                int currentPrice = (currentStock != null) ? currentStock.getSPrice() : buyPrice;
+                int currentValue = currentPrice * quantity;
+                totalStockValue += currentValue;
+                
+                System.out.printf("  %-15s  %-8d  %-12s  %-12s%n", 
+                                stockName, quantity, 
+                                formatCurrency(buyPrice), 
+                                formatCurrency(currentValue));
             }
             
             System.out.println("╚════════════════════════════════════════════════════════════════╝");
@@ -481,15 +486,8 @@ public class ConsoleUI {
         } else {
             System.out.println("보유한 주식이 없습니다.");
         }
+        System.out.println();
         
-        System.out.printf("  %-18s  %-12s  %-10s", "📈 종목명", "💰 평단가", "📦 수량");
-        System.out.println();
-        userDAO.getPortFolios().forEach(p ->System.out.printf("  %-18s  %-12d  %-10d", p.getSName(),p.getPPrice(),p.getPAmount()));;
-        System.out.println();
-        for (PortFolio p : userDAO.getPortFolios()) {
-            System.out.printf("  %-18s  %-12d  %-10d%n", p.getSName(), p.getPPrice(), p.getPAmount());
-        }        System.out.println();
-        System.out.println();
         printPrompt("계속하려면 Enter를 누르세요");
         scanner.nextLine();
     }
