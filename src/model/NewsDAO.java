@@ -27,11 +27,15 @@ public class NewsDAO {
          conn = DBUtil.getConnection();
          stmt=conn.createStatement();
          rs=stmt.executeQuery("select * from News ORDER BY RAND() limit 1");
-         
-         
-         news = new News(rs.getInt("id"),
-         rs.getBoolean("n_isGood"),
-         rs.getString("n_message"));
+          
+         if (rs.next()) {
+        	    news = new News(
+        	        rs.getInt("id"),
+        	        rs.getBoolean("n_isGood"),
+        	        rs.getString("n_message")
+        	    );
+        	}
+
       } catch (Exception e) {
          e.printStackTrace();
       }finally {

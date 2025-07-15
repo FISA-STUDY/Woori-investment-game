@@ -376,8 +376,8 @@ public class ConsoleUI {
         }
         
         System.out.println("============================================================");
-//        System.out.printf("📅 %d일차 | 👤 %s | 💰 %s%n", 
-//                         day, user.getUName(), formatCurrency(user.getUWallet()));
+        System.out.printf("📅 %d일차 | 👤 %s | 💰 %s%n", 
+                         day, user.getUName(), formatCurrency(user.getUWallet()));
         System.out.println("============================================================");
     }
     
@@ -414,6 +414,7 @@ public class ConsoleUI {
             
         } catch (Exception e) {
             printError("날짜 진행 중 오류가 발생했습니다.");
+            e.printStackTrace();  // ← 실제 에러 메시지를 콘솔에서 확인 가능하게 추가
         }
         
         // 아무 키나 누르면 계속
