@@ -18,4 +18,6 @@ public class PortFolio {
 	private String uName;
 	private String sName;
 	private Long sId;
+	
+	
 }

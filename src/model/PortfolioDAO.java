@@ -11,7 +11,12 @@ import model.domain.PortFolio;
 import util.DBUtil;
 
 public class PortfolioDAO {
+
+    private static PortfolioDAO portfolioDAO = PortfolioDAO.getPortfolioDAO();
 	
+	public static PortfolioDAO getPortfolioDAO() {
+		return portfolioDAO;
+	}
 	public List<PortFolio> getPortFolios() {
         Connection conn = null;
         Statement stmt = null;

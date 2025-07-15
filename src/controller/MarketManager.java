@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import model.PortfolioDAO;
 import model.UserDAO;
 import model.domain.PortFolio;
 import model.domain.Stock;
@@ -10,28 +11,33 @@ import model.domain.User;
 public class MarketManager {
    //포트폴리오 가져와서 전체 수량, 가격 정리
 //   private List<Portfolio> portfolios = new ArrayList<>();
-//   private static List<PortFolio>  portfolios = UserDAO.getPortFolios();
-   private static UserDAO model = UserDAO.getModel();
-   
+   private static List<PortFolio>  portfolios = PortfolioDAO.getPortfolioDAO().getPortFolios();
+   private static UserDAO userDAO = UserDAO.getModel();
+   private static PortfolioDAO portfolioDAO = PortfolioDAO.getPortfolioDAO();
    
    void buyStock(Stock stock, int num){
 	   boolean found = false;
 	   
 	      for(PortFolio portfolio : portfolios){
-	    	if(portfolio.getPName().equals(stock.getSName())){
+	    	if(portfolio.getSName().equals(stock.getSName())){
 	            int now_price = (portfolio.getPPrice()*portfolio.getPAmount() + stock.getSPrice()*num)/(portfolio.getPAmount() +num);
 	            portfolio.setPPrice(now_price);
 	            portfolio.setPAmount(portfolio.getPAmount()+num);
-	            PortFolio pf = new PortFolio(stock.getSName(), num, stock.getSPrice(), model.getCurrentPlayer().getUName());
 	            found = true;
-	            portfolios.add(pf);
-
-	            
+	            portfolioDAO.updatePortfolio(portfolio);
 	      }
 	}
 	      if(!found) {
-	    	  PortFolio pf = new PortFolio(stock.getSName(), num, stock.getSPrice(), model.getCurrentPlayer().getUName());
-	    	  portfolios.add(pf);
+	    	  PortFolio pf = new PortFolio(
+	    			    null,                                // pId (auto_increment)
+	    			    stock.getSPrice(),                   // pPrice
+	    			    num,                                 // pAmount
+	    			    userDAO.getCurrentPlayer().getUName(), // uName
+	    			    stock.getSName(),                    // sName
+	    			    (long) stock.getSId()                // sId
+	    			);
+
+	    	  portfolioDAO.updatePortfolio(pf);
 	      }
    }
    boolean sellStock(Stock stock, int num) {
