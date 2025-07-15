@@ -12,8 +12,10 @@ import lombok.Setter;
 @Setter	
 @NonNull
 public class PortFolio {
-	private String pName;
-	private int pAmount;
+	private Long pId;
 	private int pPrice;
+	private int pAmount;
 	private String uName;
+	private String sName;
+	private Long sId;
 }
