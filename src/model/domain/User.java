@@ -13,8 +13,8 @@ import lombok.ToString;
 @Setter
 @NonNull
 public class User {
-	private String u_name; //유저 이름
-	private int u_wallet; // 보유 자산
+	private String uName; //유저 이름
+	private int uWallet; // 보유 자산
 	
 }
 

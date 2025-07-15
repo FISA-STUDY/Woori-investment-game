@@ -41,7 +41,7 @@ public class ConsoleUI {
         User newUser = model.createNewPlayer(playerName);
         
         printSuccess("환영합니다, " + playerName + "님!");
-        System.out.println("💰 초기 자산: " + formatCurrency(newUser.getU_wallet()));
+        System.out.println("💰 초기 자산: " + formatCurrency(newUser.getUWallet()));
         System.out.println();
         
         return newUser;
@@ -56,10 +56,10 @@ public class ConsoleUI {
         System.out.println("╠═══════════════════════════════════════════════════════════════════════════╣");
 
         for (Stock s : StockManager.showStocks()) {
-            String stockName = s.getS_name();
-            String price = formatCurrency(s.getS_price());
-            double graph = s.getS_graph();
-            int amount = s.getS_amount();
+            String stockName = s.getSName();
+            String price = formatCurrency(s.getSPrice());
+            double graph = s.getSGraph();
+            int amount = s.getSAmount();
 
             System.out.printf("  %-18s  %-12s  %-10.2f  %-8d%n", stockName, price, graph, amount);
         }
@@ -136,7 +136,7 @@ public class ConsoleUI {
             return;
         }
         
-        System.out.println("💰 보유 자산: " + formatCurrency(currentPlayer.getU_wallet()));
+        System.out.println("💰 보유 자산: " + formatCurrency(currentPlayer.getUWallet()));
         System.out.println();
         
         // 주식 목록 표시
@@ -170,21 +170,21 @@ public class ConsoleUI {
                     continue;
                 }
                 
-                int totalCost = targetStock.getS_price() * tradeInfo.quantity;
+                int totalCost = targetStock.getSPrice() * tradeInfo.quantity;
                 
                 System.out.println();
                 System.out.println("📊 주문 정보");
                 System.out.println("종목: " + tradeInfo.stockName);
                 System.out.println("수량: " + tradeInfo.quantity + "주");
-                System.out.println("단가: " + formatCurrency(targetStock.getS_price()));
+                System.out.println("단가: " + formatCurrency(targetStock.getSPrice()));
                 System.out.println("총 금액: " + formatCurrency(totalCost));
                 System.out.println();
                 
                 // 잔고 확인
-                if(currentPlayer.getU_wallet() < totalCost) {
+                if(currentPlayer.getUWallet() < totalCost) {
                     printError("보유 자산이 부족합니다.");
                     System.out.println("필요 금액: " + formatCurrency(totalCost));
-                    System.out.println("보유 자산: " + formatCurrency(currentPlayer.getU_wallet()));
+                    System.out.println("보유 자산: " + formatCurrency(currentPlayer.getUWallet()));
                     continue;
                 }
                 
@@ -192,7 +192,7 @@ public class ConsoleUI {
                 if (confirmTransaction("구매")) {
                     if(StockManager.stockBuy(tradeInfo.stockName, tradeInfo.quantity)) {
                         printSuccess("주식 구매가 완료되었습니다!");
-                        System.out.println("잔여 자산: " + formatCurrency(model.getCurrentPlayer().getU_wallet()));
+                        System.out.println("잔여 자산: " + formatCurrency(model.getCurrentPlayer().getUWallet()));
                         return;
                     } else {
                         printError("주식 구매에 실패했습니다.");
@@ -240,13 +240,13 @@ public class ConsoleUI {
                 // 매도 정보 표시
                 Stock targetStock = StockManager.getStockByName(tradeInfo.stockName);
                 if (targetStock != null) {
-                    int totalValue = targetStock.getS_price() * tradeInfo.quantity;
+                    int totalValue = targetStock.getSPrice() * tradeInfo.quantity;
                     
                     System.out.println();
                     System.out.println("📊 매도 정보");
                     System.out.println("종목: " + tradeInfo.stockName);
                     System.out.println("수량: " + tradeInfo.quantity + "주");
-                    System.out.println("현재가: " + formatCurrency(targetStock.getS_price()));
+                    System.out.println("현재가: " + formatCurrency(targetStock.getSPrice()));
                     System.out.println("예상 수익: " + formatCurrency(totalValue));
                     System.out.println();
                 }
@@ -255,7 +255,7 @@ public class ConsoleUI {
                 if (confirmTransaction("판매")) {
                     if(StockManager.stockSell(tradeInfo.stockName, tradeInfo.quantity)) {
                         printSuccess("주식 판매가 완료되었습니다!");
-                        System.out.println("현재 자산: " + formatCurrency(model.getCurrentPlayer().getU_wallet()));
+                        System.out.println("현재 자산: " + formatCurrency(model.getCurrentPlayer().getUWallet()));
                         return;
                     } else {
                         printError("주식 판매에 실패했습니다.");
@@ -323,8 +323,8 @@ public class ConsoleUI {
         System.out.println();
         System.out.println("👤 플레이어 정보");
         System.out.println("────────────────────────────────────────");
-        System.out.println("이름: " + user.getU_name());
-        System.out.println("보유 자산: " + formatCurrency(user.getU_wallet()));
+        System.out.println("이름: " + user.getUName());
+        System.out.println("보유 자산: " + formatCurrency(user.getUWallet()));
         System.out.println();
     }
     
@@ -337,7 +337,7 @@ public class ConsoleUI {
         
         System.out.println("============================================================");
         System.out.printf("📅 %d일차 | 👤 %s | 💰 %s%n", 
-                         day, user.getU_name(), formatCurrency(user.getU_wallet()));
+                         day, user.getUName(), formatCurrency(user.getUWallet()));
         System.out.println("============================================================");
     }
     
@@ -388,10 +388,10 @@ public class ConsoleUI {
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("             📰 오늘의 뉴스 📰              ");
         System.out.println("╚════════════════════════════════════════╝");
-        System.out.println("🏢 관련 기업: " + todayNews.getS_name());
-        System.out.println((todayNews.getN_isGood() ? "📈 호재" : "📉 악재") + " 뉴스");
+        System.out.println("🏢 관련 기업: " + todayNews.getSName());
+        System.out.println((todayNews.getNIsGood() ? "📈 호재" : "📉 악재") + " 뉴스");
         System.out.println();
-        System.out.println(todayNews.getN_message());
+        System.out.println(todayNews.getNMessage());
         System.out.println();
         System.out.println("💹 주식 가격 변동:");
     }
@@ -407,7 +407,7 @@ public class ConsoleUI {
             return;
         }
         
-        System.out.println("💰 보유 현금: " + formatCurrency(currentPlayer.getU_wallet()));
+        System.out.println("💰 보유 현금: " + formatCurrency(currentPlayer.getUWallet()));
         System.out.println();
         
         // 포트폴리오 정보 표시
@@ -419,13 +419,13 @@ public class ConsoleUI {
             
             int totalStockValue = 0;
             for (var portfolio : model.getPortFolios()) {
-                String stockName = portfolio.getP_name();
-                int quantity = portfolio.getP_amount();
-                int buyPrice = portfolio.getP_price();
+                String stockName = portfolio.getPName();
+                int quantity = portfolio.getPAmount();
+                int buyPrice = portfolio.getPPrice();
                 
                 // 현재 주식 가격 가져오기
                 Stock currentStock = StockManager.getStockByName(stockName);
-                int currentPrice = (currentStock != null) ? currentStock.getS_price() : buyPrice;
+                int currentPrice = (currentStock != null) ? currentStock.getSPrice() : buyPrice;
                 int currentValue = currentPrice * quantity;
                 totalStockValue += currentValue;
                 
@@ -445,7 +445,7 @@ public class ConsoleUI {
         
         System.out.printf("  %-18s  %-12s  %-10s", "📈 종목명", "💰 평단가", "📦 수량");
         System.out.println();
-        model.getPortFolios().forEach(p ->System.out.printf("  %-18s  %-12d  %-10d", p.getP_name(),p.getP_price(),p.getP_amount()));;
+        model.getPortFolios().forEach(p ->System.out.printf("  %-18s  %-12d  %-10d", p.getPName(),p.getPPrice(),p.getPAmount()));;
         System.out.println();
         System.out.println();
         printPrompt("계속하려면 Enter를 누르세요");
@@ -461,8 +461,8 @@ public class ConsoleUI {
 	        boolean hasValidStocks = false;
 	        
 	        for (var portfolio : model.getPortFolios()) {
-	            if (portfolio.getP_amount() > 0) {
-	                System.out.println("  " + portfolio.getP_name() + ": " + portfolio.getP_amount() + "주");
+	            if (portfolio.getPAmount() > 0) {
+	                System.out.println("  " + portfolio.getPName() + ": " + portfolio.getPAmount() + "주");
 	                hasValidStocks = true;
 	            }
 	        }

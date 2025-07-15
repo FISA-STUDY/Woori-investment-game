@@ -75,8 +75,8 @@ public class Main {
                         ConsoleUI.printSuccess("최종 게임 결과:");
                         System.out.println("────────────────────────────────────────");
                         System.out.println("📅 플레이 일수: " + currentDay + "일");
-                        System.out.println("👤 플레이어: " + model.getCurrentPlayer().getU_name());
-                        System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getU_wallet()));
+                        System.out.println("👤 플레이어: " + model.getCurrentPlayer().getUName());
+                        System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getUWallet()));
                         System.out.println();
                         
                         isGaming = false;
@@ -99,8 +99,8 @@ public class Main {
 	                     ConsoleUI.printSuccess("최종 게임 결과:");
 	                     System.out.println("────────────────────────────────────────");
 	                     System.out.println("📅 플레이 일수: " + currentDay + "일");
-	                     System.out.println("👤 플레이어: " + model.getCurrentPlayer().getU_name());
-	                     System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getU_wallet()));
+	                     System.out.println("👤 플레이어: " + model.getCurrentPlayer().getUName());
+	                     System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getUWallet()));
 	                     System.out.println();
 	                     isGaming = false;
 	                     break;

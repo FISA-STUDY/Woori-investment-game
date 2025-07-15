@@ -18,11 +18,11 @@ public class MarketManager {
 	   boolean found = false;
 	   
 	      for(PortFolio portfolio : portfolios){
-	    	if(portfolio.getP_name().equals(stock.getS_name())){
-	            int now_price = (portfolio.getP_price()*portfolio.getP_amount() + stock.getS_price()*num)/(portfolio.getP_amount() +num);
-	            portfolio.setP_price(now_price);
-	            portfolio.setP_amount(portfolio.getP_amount()+num);
-	            PortFolio pf = new PortFolio(stock.getS_name(), num, stock.getS_price(), model.getCurrentPlayer().getU_name());
+	    	if(portfolio.getPName().equals(stock.getSName())){
+	            int now_price = (portfolio.getPPrice()*portfolio.getPAmount() + stock.getSPrice()*num)/(portfolio.getPAmount() +num);
+	            portfolio.setPPrice(now_price);
+	            portfolio.setPAmount(portfolio.getPAmount()+num);
+	            PortFolio pf = new PortFolio(stock.getSName(), num, stock.getSPrice(), model.getCurrentPlayer().getUName());
 	            found = true;
 	            portfolios.add(pf);
 
@@ -30,21 +30,21 @@ public class MarketManager {
 	      }
 	}
 	      if(!found) {
-	    	  PortFolio pf = new PortFolio(stock.getS_name(), num, stock.getS_price(), model.getCurrentPlayer().getU_name());
+	    	  PortFolio pf = new PortFolio(stock.getSName(), num, stock.getSPrice(), model.getCurrentPlayer().getUName());
 	    	  portfolios.add(pf);
 	      }
    }
    boolean sellStock(Stock stock, int num) {
 	    for(PortFolio portfolio : portfolios) {
-	        if(portfolio.getP_name().equals(stock.getS_name())) {
-	            if(portfolio.getP_amount() < num) {
+	        if(portfolio.getPName().equals(stock.getSName())) {
+	            if(portfolio.getPAmount() < num) {
 	                System.out.println("판매할 개수가 보유량보다 클 수 없습니다.");
 	                return false;
 	            }
 
 	            // 수량 감소
-	            portfolio.setP_amount(portfolio.getP_amount() - num);
-	            if(portfolio.getP_amount() == 0) {
+	            portfolio.setPAmount(portfolio.getPAmount() - num);
+	            if(portfolio.getPAmount() == 0) {
 	            	portfolios.remove(portfolio);
 	            }
 	            // 평균 단가는 매도 시 갱신하지 않음
@@ -61,9 +61,9 @@ public class MarketManager {
        
        for (PortFolio portfolio : playerPortfolios) {
            // 현재 주가로 계산
-           Stock currentStock = StockManager.getStockByName(portfolio.getP_name());
+           Stock currentStock = StockManager.getStockByName(portfolio.getPName());
            if (currentStock != null) {
-               totalValue += currentStock.getS_price() * portfolio.getP_amount();
+               totalValue += currentStock.getSPrice() * portfolio.getPAmount();
            }
        }
        
@@ -71,7 +71,7 @@ public class MarketManager {
    }
    public static int calculateTotalAsset() {
        User currentPlayer = model.getCurrentPlayer();
-       return currentPlayer.getU_wallet() + calculateTotalPortfolioValue();
+       return currentPlayer.getUWallet() + calculateTotalPortfolioValue();
    }
    
    public static List<PortFolio> showPortfolio(){

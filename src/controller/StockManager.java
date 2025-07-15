@@ -17,23 +17,23 @@ public class StockManager {
         for(Stock stock : stmodel.getStock()) {
             double rate;
             
-            if(n.getS_name().equals(stock.getS_name())) {
+            if(n.getSName().equals(stock.getSName())) {
                 // 뉴스에 언급된 주식
-                if(n.getN_isGood()) {
+                if(n.getNIsGood()) {
                     rate = Math.random() * 0.2; // 0 ~ 0.2 (상승)
-                    stock.setS_price((int)(stock.getS_price() * (1 + rate)));
-                    System.out.println("📈 " + stock.getS_name() + " 주가 상승: +" + String.format("%.1f", rate * 100) + "%");
+                    stock.setSPrice((int)(stock.getSPrice() * (1 + rate)));
+                    System.out.println("📈 " + stock.getSName() + " 주가 상승: +" + String.format("%.1f", rate * 100) + "%");
                 } else {
                     rate = Math.random() * 0.2; // 0 ~ 0.2 (하락)
-                    stock.setS_price((int)(stock.getS_price() * (1 - rate)));
-                    System.out.println("📉 " + stock.getS_name() + " 주가 하락: -" + String.format("%.1f", rate * 100) + "%");
+                    stock.setSPrice((int)(stock.getSPrice() * (1 - rate)));
+                    System.out.println("📉 " + stock.getSName() + " 주가 하락: -" + String.format("%.1f", rate * 100) + "%");
                 }
-                stock.setS_graph(rate);
+                stock.setSGraph(rate);
             } else {
                 // 다른 주식들의 소폭 랜덤 변동
                 rate = (Math.random() - 0.5) * 0.1; // -0.05 ~ 0.05
-                stock.setS_price((int)(stock.getS_price() * (1 + rate)));
-                stock.setS_graph(Math.abs(rate));
+                stock.setSPrice((int)(stock.getSPrice() * (1 + rate)));
+                stock.setSGraph(Math.abs(rate));
             }
         }
     }
@@ -48,12 +48,12 @@ public class StockManager {
             return false;
         }
         
-        int totalCost = targetStock.getS_price() * num;
+        int totalCost = targetStock.getSPrice() * num;
         User currentPlayer = model.getCurrentPlayer();
         
-        if (currentPlayer.getU_wallet() >= totalCost) {
-            currentPlayer.setU_wallet(currentPlayer.getU_wallet() - totalCost);
-            targetStock.setS_amount(targetStock.getS_amount()-num);
+        if (currentPlayer.getUWallet() >= totalCost) {
+            currentPlayer.setUWallet(currentPlayer.getUWallet() - totalCost);
+            targetStock.setSAmount(targetStock.getSAmount()-num);
             marketManager.buyStock(targetStock,num);
             return true;
         }
@@ -74,8 +74,8 @@ public class StockManager {
         boolean isSuccess = marketManager.sellStock(targetStock, num);
         if (isSuccess) {
             User currentPlayer = model.getCurrentPlayer();
-            int totalValue = targetStock.getS_price() * num;
-            currentPlayer.setU_wallet(currentPlayer.getU_wallet() + totalValue);
+            int totalValue = targetStock.getSPrice() * num;
+            currentPlayer.setUWallet(currentPlayer.getUWallet() + totalValue);
             return true;
         }
         return false;
@@ -85,7 +85,7 @@ public class StockManager {
     // 주식 이름으로 찾기 헬퍼 메서드
     private static Stock findStockByName(String stockName) {
         for (Stock stock : stmodel.getStock()) {
-            if (stockName.equals(stock.getS_name())) {
+            if (stockName.equals(stock.getSName())) {
                 return stock;
             }
         }

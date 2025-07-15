@@ -59,7 +59,7 @@ public class Database {
     public static List<PortFolio> getPortfoliosByUser(String userName) {
         List<PortFolio> userPortfolios = new ArrayList<>();
         for (PortFolio portfolio : portfolios) {
-            if (portfolio.getU_name().equals(userName)) {
+            if (portfolio.getUName().equals(userName)) {
                 userPortfolios.add(portfolio);
             }
         }
