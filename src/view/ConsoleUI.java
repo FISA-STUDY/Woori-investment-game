@@ -25,6 +25,7 @@ public class ConsoleUI {
             System.out.println("1. 로그인");
             System.out.println("2. 회원가입");
             System.out.println("0. 종료");
+            System.out.println();
             printPrompt("메뉴를 선택하세요 (0-2)");
 
             String choice = scanner.nextLine();
