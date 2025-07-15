@@ -13,14 +13,13 @@ import lombok.ToString;
 @Setter
 @ToString
 public class News {
-    private int n_id;
+    private int nId;
     
     @NonNull
-    private Boolean n_isGood;
+    private Boolean nIsGood;
     
     @NonNull
-    private String n_message;
+    private String nMessage;
+ 
     
-    @NonNull
-    private String s_name;
 }

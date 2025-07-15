@@ -1,34 +1,23 @@
 package controller;
 
-import model.Database;
+import model.NewsDAO;
+import model.StockDAO;
 import model.domain.News;
+import model.domain.Stock;
+import model.dto.NewsStockPair;
 
 public class NewsGenerator {
-    
-    public News generateNews() {
-        return Database.getRandomNews();
-    }
-    
+
+    private static StockDAO stockDAO = StockDAO.getStockDAO();
+   private static NewsDAO newsDAO = NewsDAO.getNewsDAO();
  
-    public News generateNewsAndApplyPriceChange() {
-        // 1. 랜덤 뉴스 생성
-        News todayNews = generateNews();
-        
-        // 2. 뉴스에 따른 주식 가격 변동 적용
-        StockManager.priceChange(todayNews);
-        
-        return todayNews;
+    public NewsStockPair generateNews() throws Exception {
+       News todayNews =  newsDAO.getNews();
+      Stock randStock = stockDAO.getOneRandomStock();
+        return NewsStockPair.builder()
+              .news(todayNews)
+              .stock(randStock)
+              .build();
     }
     
-    public News[] generateMultipleNews(int count) {
-        News[] dailyNews = new News[count];
-        
-        for (int i = 0; i < count; i++) {
-            dailyNews[i] = generateNews();
-            // 각 뉴스마다 주식 가격 변동 적용
-            StockManager.priceChange(dailyNews[i]);
-        }
-        
-        return dailyNews;
-    }
 }

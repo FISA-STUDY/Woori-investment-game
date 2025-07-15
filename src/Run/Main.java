@@ -2,22 +2,25 @@ package Run;
 
 import model.domain.User;
 import view.ConsoleUI;
-import model.Model;
+import model.UserDAO;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            Model model = Model.getModel();
+    	try {
+            UserDAO model = UserDAO.getModel();
+            ConsoleUI.printTitle();
+            System.out.println();
+            ConsoleUI.loginMenu();
+           
 
-            User player = ConsoleUI.createPlayer();
-            int currentDay = 1;
+            UserDAO model1 = UserDAO.getModel();  // 로그인한 유저 모델 접근
+            int currentDay = model1.getCurrentDay();
 
             System.out.println("\n=== 게임 시작 ===");
 
-            ConsoleUI.printGameStatus(currentDay, model.getCurrentPlayer());
-
-            ConsoleUI.displayUserInfo(model.getCurrentPlayer());
-
+            ConsoleUI.printGameStatus(currentDay, model1.getCurrentPlayer());
+            ConsoleUI.displayUserInfo(model1.getCurrentPlayer());
+            
             boolean isGaming = true;
             while(isGaming) {
                 ConsoleUI.printMainMenu();
@@ -60,11 +63,11 @@ public class Main {
 
                     case 4:
                         ConsoleUI.nextDay();
-                        currentDay = model.getCurrentDay(); 
+                        currentDay = model1.getCurrentDay(); 
 
-                        ConsoleUI.printGameStatus(currentDay, model.getCurrentPlayer());
+                        ConsoleUI.printGameStatus(currentDay, model1.getCurrentPlayer());
 
-                        ConsoleUI.displayUserInfo(model.getCurrentPlayer());
+                        ConsoleUI.displayUserInfo(model1.getCurrentPlayer());
                         break;
 
                     case 0:
@@ -75,8 +78,8 @@ public class Main {
                         ConsoleUI.printSuccess("최종 게임 결과:");
                         System.out.println("────────────────────────────────────────");
                         System.out.println("📅 플레이 일수: " + currentDay + "일");
-                        System.out.println("👤 플레이어: " + model.getCurrentPlayer().getU_name());
-                        System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getU_wallet()));
+                        System.out.println("👤 플레이어: " + model1.getCurrentPlayer().getUName());
+//                        System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getUWallet()));
                         System.out.println();
                         
                         isGaming = false;
@@ -99,8 +102,8 @@ public class Main {
 	                     ConsoleUI.printSuccess("최종 게임 결과:");
 	                     System.out.println("────────────────────────────────────────");
 	                     System.out.println("📅 플레이 일수: " + currentDay + "일");
-	                     System.out.println("👤 플레이어: " + model.getCurrentPlayer().getU_name());
-	                     System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getU_wallet()));
+	                     System.out.println("👤 플레이어: " + model1.getCurrentPlayer().getUName());
+//	                     System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getUWallet()));
 	                     System.out.println();
 	                     isGaming = false;
 	                     break;

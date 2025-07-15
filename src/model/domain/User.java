@@ -11,10 +11,20 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@NonNull
+@ToString
 public class User {
-	private String u_name; //유저 이름
-	private int u_wallet; // 보유 자산
-	
-}
 
+    @NonNull
+    private String uName;    
+
+    @NonNull
+    private String uPassword;  
+
+    private long uWallet;
+    
+    // 커스텀 생성자 (회원가입 시 사용)
+    public User(String uName, String uPassword) {
+        this.uName = uName;
+        this.uPassword = uPassword;
+    }
+}
