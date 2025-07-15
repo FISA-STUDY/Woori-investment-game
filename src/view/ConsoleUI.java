@@ -4,56 +4,68 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Scanner;
 
-import controller.MarketManager;
 import controller.NewsGenerator;
 import controller.StockManager;
 import model.UserDAO;
 import model.domain.News;
 import model.domain.Stock;
 import model.domain.User;
-import model.dto.NewsStockPair;
 
 public class ConsoleUI {
     private static Scanner scanner = new Scanner(System.in);
     private static final NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.KOREA);
     private static UserDAO model = UserDAO.getModel();
-<<<<<<< HEAD
-    private static MarketManager marketManager = new MarketManager();
-    private static NewsGenerator newsGenerator = new NewsGenerator();
-    private static StockManager stockManager = new StockManager();
-    
-    
-    // 게임 시작 - 플레이어 생성
-    public static User createPlayer() {
-        printTitle();
-        System.out.println();
-        System.out.println("🎮 미니투자게임에 오신 것을 환영합니다!");
-        System.out.println();
+  
+    public static void loginMenu() {
+        Scanner scanner = new Scanner(System.in);
+        UserDAO model = UserDAO.getModel();
         
-        String playerName = "";
-        while(playerName.trim().isEmpty()) {
-            printPrompt("플레이어 이름을 입력하세요"); 
-            playerName = scanner.nextLine();
-            
-            if(playerName.trim().isEmpty()) {
-                printError("이름을 입력하세요.");
+        while (true) {
+            System.out.println("1. 로그인");
+            System.out.println("2. 회원가입");
+            System.out.println("0. 종료");
+            printPrompt("선택하세요");
+
+            String choice = scanner.nextLine();
+            switch (choice) {
+                case "1":
+                    printPrompt("아이디를 입력하세요");
+                    String loginId = scanner.nextLine();
+                    printPrompt("비밀번호를 입력하세요");
+                    String loginPwd = scanner.nextLine();
+
+                    if (model.login(loginId, loginPwd)) {
+                        printSuccess("로그인 성공!");
+                        return; // 로그인 성공 → main으로 진행
+                    } else {
+                        printError("로그인 실패. 아이디 또는 비밀번호가 틀렸습니다.");
+                    }
+                    break;
+
+                case "2":
+                    printPrompt("새 아이디를 입력하세요");
+                    String regId = scanner.nextLine();
+                    printPrompt("비밀번호를 입력하세요");
+                    String regPwd = scanner.nextLine();
+
+                    if (model.register(regId, regPwd)) {
+                        printSuccess("회원가입 성공! 이제 로그인하세요.");
+                    } else {
+                        printError("회원가입 실패. 이미 존재하는 아이디이거나 오류 발생.");
+                    }
+                    break;
+
+                case "0":
+                    printInfo("프로그램을 종료합니다.");
+                    System.exit(0);
+                    break;
+
+                default:
+                    printError("잘못된 입력입니다.");
             }
         }
-        System.out.println("────────────────────────────────────────");
-        System.out.println();
-
-        // Model을 통해 User 객체 생성 (currentPlayer로 자동 설정됨)
-        User newUser = model.createNewPlayer(playerName);
-        
-        printSuccess("환영합니다, " + playerName + "님!");
-        System.out.println("💰 초기 자산: " + formatCurrency(newUser.getUWallet()));
-        System.out.println();
-        
-        return newUser;
     }
-=======
-  
->>>>>>> 9c54e19 (feat: 로그인/회원가입 기능 구현)
+
     
     public static void printStocks() {
         System.out.println();
@@ -332,7 +344,7 @@ public class ConsoleUI {
         System.out.println("👤 플레이어 정보");
         System.out.println("────────────────────────────────────────");
         System.out.println("이름: " + user.getUName());
-//        System.out.println("보유 자산: " + formatCurrency(user.getUWallet()));
+        System.out.println("보유 자산: " + formatCurrency(user.getUWallet()));
         System.out.println();
     }
     
@@ -367,9 +379,8 @@ public class ConsoleUI {
             model.incrementDay();
             
             // 2. 뉴스 생성 및 주식 가격 변동 적용
-            NewsStockPair todayNews = newsGenerator.generateNews();
-            stockManager.priceChange(todayNews);
-            
+            NewsGenerator newsGenerator = new NewsGenerator();
+            News todayNews = newsGenerator.generateNewsAndApplyPriceChange();
             
             // 3. 뉴스 표시
             if (todayNews != null) {
@@ -393,14 +404,14 @@ public class ConsoleUI {
     /**
      * 일일 뉴스 표시 (뉴스 객체를 직접 받아서 표시)
      */
-    private static void displayDailyNews(NewsStockPair todayNews) {
+    private static void displayDailyNews(News todayNews) {
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("             📰 오늘의 뉴스 📰              ");
         System.out.println("╚════════════════════════════════════════╝");
-        System.out.println("🏢 관련 기업: " + todayNews.getStock().getSName());
-        System.out.println((todayNews.getNews().getNIsGood() ? "📈 호재" : "📉 악재") + " 뉴스");
+        System.out.println("🏢 관련 기업: " + todayNews.getSName());
+        System.out.println((todayNews.getNIsGood() ? "📈 호재" : "📉 악재") + " 뉴스");
         System.out.println();
-        System.out.println(todayNews.getNews().getNMessage());
+        System.out.println(todayNews.getNMessage());
         System.out.println();
         System.out.println("💹 주식 가격 변동:");
     }
@@ -461,75 +472,6 @@ public class ConsoleUI {
         scanner.nextLine();
     }
     
-    public static User createPlayer() {
-        printTitle();
-        printPrompt("플레이어 이름을 입력하세요");
-        String playerName = scanner.nextLine();
-
-        User newUser = model.createNewPlayer(playerName); // 🔑 여기서 currentPlayer 설정
-        printSuccess("환영합니다, " + newUser.getUName() + "님!");
-        return newUser;
-    }
-
-    public static boolean loginMenu() {
-        printTitle();
-        System.out.println("1. 로그인");
-        System.out.println("2. 회원가입");
-        System.out.println("0. 종료");
-
-        while (true) {
-            printPrompt("선택하세요");
-            String input = scanner.nextLine();
-
-            switch (input) {
-                case "1":
-                    return login();
-                case "2":
-                    return register();
-                case "0":
-                    printInfo("게임을 종료합니다.");
-                    System.exit(0);
-                default:
-                    printWarning("올바른 숫자를 입력해주세요.");
-            }
-        }
-    }
-
-    private static boolean login() {
-        printPrompt("아이디를 입력하세요");
-        String id = scanner.nextLine();
-
-        printPrompt("비밀번호를 입력하세요");
-        String pw = scanner.nextLine();
-
-        boolean result = model.login(id, pw);
-        if (result) {
-            printSuccess("로그인 성공! 환영합니다 " + model.getCurrentPlayer().getUName() + "님");
-            return true;
-        } else {
-            printError("로그인 실패. 아이디나 비밀번호를 확인해주세요.");
-            return false;
-        }
-    }
-
-    private static boolean register() {
-        printPrompt("새 아이디를 입력하세요");
-        String id = scanner.nextLine();
-
-        printPrompt("비밀번호를 입력하세요");
-        String pw = scanner.nextLine();
-
-        boolean result = model.register(id, pw);
-        if (result) {
-            printSuccess("회원가입 성공! 다시 로그인 해주세요.");
-            return false; // 로그인 필요
-        } else {
-            printError("회원가입 실패. 이미 존재하는 아이디입니다.");
-            return false;
-        }
-    }
-	
-    
     // 포트폴리오 요약 표시 
 	private static void showPortfolioSummary() {
 	    System.out.println("💼 현재 보유 주식:");
@@ -582,7 +524,7 @@ public class ConsoleUI {
     }
     
     // 돈 형식으로 포맷팅
-    public static String formatCurrency(int amount) {
+    public static String formatCurrency(long amount) {
         return currencyFormat.format(amount) + "원";
     }
 }
