@@ -25,11 +25,16 @@ public class ConsoleUI {
             System.out.println("1. 로그인");
             System.out.println("2. 회원가입");
             System.out.println("0. 종료");
-            printPrompt("선택하세요");
+            System.out.println();
+            printPrompt("메뉴를 선택하세요 (0-2)");
 
             String choice = scanner.nextLine();
             switch (choice) {
                 case "1":
+                    System.out.println("╔════════════════════════════════════════╗");
+                    System.out.println("                   로그인                    ");
+                    System.out.println("╚════════════════════════════════════════╝");
+                    System.out.println();
                     printPrompt("아이디를 입력하세요");
                     String loginId = scanner.nextLine();
                     printPrompt("비밀번호를 입력하세요");
@@ -44,6 +49,10 @@ public class ConsoleUI {
                     break;
 
                 case "2":
+                	System.out.println("╔════════════════════════════════════════╗");
+                    System.out.println("                  회원가입                    ");
+                    System.out.println("╚════════════════════════════════════════╝");
+                    System.out.println();
                     printPrompt("새 아이디를 입력하세요");
                     String regId = scanner.nextLine();
                     printPrompt("비밀번호를 입력하세요");
@@ -51,8 +60,10 @@ public class ConsoleUI {
 
                     if (model.register(regId, regPwd)) {
                         printSuccess("회원가입 성공! 이제 로그인하세요.");
+                        System.out.println();
                     } else {
                         printError("회원가입 실패. 이미 존재하는 아이디이거나 오류 발생.");
+                        System.out.println();
                     }
                     break;
 
@@ -63,6 +74,7 @@ public class ConsoleUI {
 
                 default:
                     printError("잘못된 입력입니다.");
+                    System.out.println();
             }
         }
     }
