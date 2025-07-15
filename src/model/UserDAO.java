@@ -31,7 +31,7 @@ public class UserDAO {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, uName);
             rs = pstmt.executeQuery();
-            return rs.next(); // 존재하면 true
+            return rs.next(); 
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

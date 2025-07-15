@@ -17,34 +17,6 @@ public class StockManager {
     
     public static void priceChange(NewsStockPair newsStockPair){
         try {
-<<<<<<< HEAD
-			for(Stock stock : stockDAO.getStock()) {
-			    double rate;
-			    
-			    if(s.getSName().equals(stock.getSName())) {
-			        // 뉴스에 언급된 주식
-			        if(n.getNIsGood()) {
-			            rate = Math.random() * 0.2; // 0 ~ 0.2 (상승)
-			            stock.setSPrice((int)(stock.getSPrice() * (1 + rate)));
-			            System.out.println("📈 " + stock.getSName() + " 주가 상승: +" + String.format("%.1f", rate * 100) + "%");
-			        } else {
-			            rate = Math.random() * 0.2; // 0 ~ 0.2 (하락)
-			            stock.setSPrice((int)(stock.getSPrice() * (1 - rate)));
-			            System.out.println("📉 " + stock.getSName() + " 주가 하락: -" + String.format("%.1f", rate * 100) + "%");
-			        }
-			        stock.setSGraph(rate);
-			    } else {
-			        // 다른 주식들의 소폭 랜덤 변동
-			        rate = (Math.random() - 0.5) * 0.1; // -0.05 ~ 0.05
-			        stock.setSPrice((int)(stock.getSPrice() * (1 + rate)));
-			        stock.setSGraph(Math.abs(rate));
-			    }
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-=======
          for(Stock stock : stockDAO.getStock()) {
              double rate;
              
@@ -71,7 +43,6 @@ public class StockManager {
          // TODO Auto-generated catch block
          e.printStackTrace();
       }
->>>>>>> 9c54e19 (feat: 로그인/회원가입 기능 구현)
     }
 //    
 //    public static boolean stockBuy(String stockName, int num) {
