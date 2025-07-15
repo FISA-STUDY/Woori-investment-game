@@ -8,7 +8,8 @@ public class Main {
     public static void main(String[] args) {
     	try {
             UserDAO model = UserDAO.getModel();
-
+            ConsoleUI.printTitle();
+            System.out.println();
             ConsoleUI.loginMenu();
            
 

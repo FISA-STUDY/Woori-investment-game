@@ -18,6 +18,7 @@ public class NewsDAO {
     private NewsDAO() {}
     
     public News getNews() throws Exception{
+<<<<<<< HEAD
       Connection conn = null;
       Statement stmt = null;
       ResultSet rs = null;
@@ -41,6 +42,31 @@ public class NewsDAO {
       }
       return news;
    }
+=======
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		News news = null;
+		try {
+			conn = DBUtil.getConnection();
+			stmt=conn.createStatement();
+			rs=stmt.executeQuery("select * from News ORDER BY RAND() limit 1");
+			
+			
+			news = new News(rs.getInt("id"),
+			rs.getBoolean("n_isGood"),
+			rs.getString("n_message"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			
+			DBUtil.close(conn,stmt,rs);
+			
+		}
+		return news;
+	}
+>>>>>>> 7b9a6c52f9ffb4cc5a54e3c1be8f119e4f4fa976
     
    
 }
