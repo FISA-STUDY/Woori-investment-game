@@ -86,7 +86,7 @@ public class StockManager {
     private static Stock findStockByName(String stockName) throws Exception {
         for (Stock stock : stockDAO.getStock()) {
             if (stockName.equals(stock.getSName())) {
-                return stock
+                return stock;
             }
         }
         return null;
