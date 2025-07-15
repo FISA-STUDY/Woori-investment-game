@@ -29,17 +29,9 @@ public class NewsDAO {
 			rs=stmt.executeQuery("select * from News ORDER BY RAND() limit 1");
 			
 			
-<<<<<<< HEAD
 			news = new News(rs.getInt("id"),
 			rs.getBoolean("n_isGood"),
 			rs.getString("n_message"));
-=======
-			news = new News(); // 10개의 메모리 증가
-			new News(rs.getInt("empno"),
-			rs.getString("ename"),
-			rs.getInt("deptno"));
-			}
->>>>>>> 9c54e19 (feat: 로그인/회원가입 기능 구현)
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {

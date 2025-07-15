@@ -10,6 +10,7 @@ import model.UserDAO;
 import model.domain.News;
 import model.domain.Stock;
 import model.domain.User;
+import model.dto.NewsStockPair;
 
 public class ConsoleUI {
     private static Scanner scanner = new Scanner(System.in);
@@ -88,14 +89,19 @@ public class ConsoleUI {
         System.out.printf("  %-18s  %-12s  %-10s ", "📈 종목명", "💰 현재가", "📊 가격 동향 \n");
         System.out.println("╠═══════════════════════════════════════════════════════════════════════════╣");
 
-        for (Stock s : StockManager.showStocks()) {
-            String stockName = s.getSName();
-            String price = formatCurrency(s.getSPrice());
-            double graph = s.getSGraph();
+        try {
+			for (Stock s : StockManager.showStocks()) {
+			    String stockName = s.getSName();
+			    String price = formatCurrency(s.getSPrice());
+			    double graph = s.getSGraph();
 
-            System.out.printf("  %-18s  %-12s  %-10.2f", stockName, price, graph);
-            System.out.println();
-        }
+			    System.out.printf("  %-18s  %-12s  %-10.2f", stockName, price, graph);
+			    System.out.println();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+				System.out.println("서버에 문제가 생겼어요..");
+		}
 
         System.out.println("╚═══════════════════════════════════════════════════════════════════════════╝");
     }
@@ -393,7 +399,7 @@ public class ConsoleUI {
             
             // 2. 뉴스 생성 및 주식 가격 변동 적용
             NewsGenerator newsGenerator = new NewsGenerator();
-            News todayNews = newsGenerator.generateNewsAndApplyPriceChange();
+            NewsStockPair todayNews = newsGenerator.generateNews();
             
             // 3. 뉴스 표시
             if (todayNews != null) {
@@ -417,14 +423,14 @@ public class ConsoleUI {
     /**
      * 일일 뉴스 표시 (뉴스 객체를 직접 받아서 표시)
      */
-    private static void displayDailyNews(News todayNews) {
+    private static void displayDailyNews(NewsStockPair todayNews) {
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("             📰 오늘의 뉴스 📰              ");
         System.out.println("╚════════════════════════════════════════╝");
-        System.out.println("🏢 관련 기업: " + todayNews.getSName());
-        System.out.println((todayNews.getNIsGood() ? "📈 호재" : "📉 악재") + " 뉴스");
+        System.out.println("🏢 관련 기업: " + todayNews.getStock().getSName());
+        System.out.println((todayNews.getNews().getNIsGood() ? "📈 호재" : "📉 악재") + " 뉴스");
         System.out.println();
-        System.out.println(todayNews.getNMessage());
+        System.out.println(todayNews.getNews().getNMessage());
         System.out.println();
         System.out.println("💹 주식 가격 변동:");
     }
@@ -486,30 +492,30 @@ public class ConsoleUI {
     }
     
     // 포트폴리오 요약 표시 
-	private static void showPortfolioSummary() {
-	    System.out.println("💼 현재 보유 주식:");
-	    
-	    if (model.getPortFolios() != null && !model.getPortFolios().isEmpty()) {
-	        // ✅ 수량이 0보다 큰 주식만 필터링해서 표시
-	        boolean hasValidStocks = false;
-	        
-	        for (var portfolio : model.getPortFolios()) {
-	            if (portfolio.getPAmount() > 0) {
-	                System.out.println("  " + portfolio.getPName() + ": " + portfolio.getPAmount() + "주");
-	                hasValidStocks = true;
-	            }
-	        }
-	        
-	        // ✅ 수량이 0보다 큰 주식이 없으면 "보유한 주식이 없습니다" 표시
-	        if (!hasValidStocks) {
-	            System.out.println("  보유한 주식이 없습니다.");
-	        }
-	    } else {
-	        System.out.println("  보유한 주식이 없습니다.");
-	    }
-	    
-	    System.out.println();
-	}
+   private static void showPortfolioSummary() {
+       System.out.println("💼 현재 보유 주식:");
+       
+       if (model.getPortFolios() != null && !model.getPortFolios().isEmpty()) {
+           // ✅ 수량이 0보다 큰 주식만 필터링해서 표시
+           boolean hasValidStocks = false;
+           
+           for (var portfolio : model.getPortFolios()) {
+               if (portfolio.getPAmount() > 0) {
+                   System.out.println("  " + portfolio.getPName() + ": " + portfolio.getPAmount() + "주");
+                   hasValidStocks = true;
+               }
+           }
+           
+           // ✅ 수량이 0보다 큰 주식이 없으면 "보유한 주식이 없습니다" 표시
+           if (!hasValidStocks) {
+               System.out.println("  보유한 주식이 없습니다.");
+           }
+       } else {
+           System.out.println("  보유한 주식이 없습니다.");
+       }
+       
+       System.out.println();
+   }
 
     // 성공 메시지 출력
     public static void printSuccess(String message) {
