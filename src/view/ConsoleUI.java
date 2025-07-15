@@ -243,6 +243,8 @@ public class ConsoleUI {
                 
             } catch(Exception e) {
                 printError("입력 처리 중 오류가 발생했습니다.");
+                e.printStackTrace();  // ← 실제 에러 메시지를 콘솔에서 확인 가능하게 추가
+
             }
         }
     }

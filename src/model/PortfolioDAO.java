@@ -12,19 +12,15 @@ import model.domain.User;
 import util.DBUtil;
 
 public class PortfolioDAO {
-
-    private static PortfolioDAO portfolioDAO = PortfolioDAO.getPortfolioDAO();
+//싱글턴
+    private static final PortfolioDAO instance = new PortfolioDAO();
 	
-	public static PortfolioDAO getPortfolioDAO() {
-		return portfolioDAO;
-	}
-    private static PortfolioDAO model = new PortfolioDAO();
-    public static PortfolioDAO getModel() {
-        return model;
-    }
-
     private PortfolioDAO() {}
-	
+
+    public static PortfolioDAO getPortfolioDAO() {
+        return instance;
+    }
+    	
     private String getCurrentUserName() {
     	User current = UserDAO.getModel().getCurrentPlayer();
     	return (current != null) ? current.getUName() : null;
@@ -37,14 +33,16 @@ public class PortfolioDAO {
         if (userName == null) return portfolioList;
 		
         Connection conn = null;
-        Statement stmt = null;
+        PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
             conn = DBUtil.getConnection();
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM Portfolio");
-
+            String sql = "SELECT * FROM Portfolio WHERE u_name = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userName);
+            rs = pstmt.executeQuery();
+            
             while (rs.next()) {
                 PortFolio pf = new PortFolio();
                 pf.setPId(rs.getLong("p_id"));
@@ -60,7 +58,7 @@ public class PortfolioDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DBUtil.close(conn, stmt, rs);
+            DBUtil.close(conn, pstmt, rs);
         }
 
         return portfolioList;
@@ -73,13 +71,14 @@ public class PortfolioDAO {
 
 	        try {
 	            conn = DBUtil.getConnection();
-	            String sql = "INSERT INTO Portfolio (user_name, stock_name, stock_id, amount, price) VALUES (?, ?, ?, ?, ?)";
+	            String sql = "INSERT INTO Portfolio (p_price, p_amount, u_name, s_name, s_id) VALUES (?, ?, ?, ?, ?)";
 	            pstmt = conn.prepareStatement(sql);
-	            pstmt.setString(1, pf.getUName());
-	            pstmt.setString(2, pf.getSName());
-	            pstmt.setLong(3, pf.getSId());
-	            pstmt.setInt(4, pf.getPAmount());
-	            pstmt.setInt(5, pf.getPPrice());
+	            pstmt.setInt(1, pf.getPPrice());
+	            pstmt.setInt(2, pf.getPAmount());
+	            pstmt.setString(3, pf.getUName());
+	            pstmt.setString(4, pf.getSName());
+	            pstmt.setLong(5, pf.getSId());
+
 
 	            pstmt.executeUpdate();
 	        } catch (Exception e) {
