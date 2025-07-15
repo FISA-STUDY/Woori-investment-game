@@ -54,10 +54,8 @@ public class ConsoleUI {
                     System.out.println("╚════════════════════════════════════════╝");
                     System.out.println();
                     printPrompt("새 아이디를 입력하세요");
-                    System.out.println();
                     String regId = scanner.nextLine();
                     printPrompt("비밀번호를 입력하세요");
-                    System.out.println();
                     String regPwd = scanner.nextLine();
 
                     if (model.register(regId, regPwd)) {
