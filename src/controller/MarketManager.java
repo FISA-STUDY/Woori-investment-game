@@ -4,21 +4,20 @@ import java.util.List;
 
 import model.PortfolioDAO;
 import model.UserDAO;
+import model.PortfolioDAO;
 import model.domain.PortFolio;
 import model.domain.Stock;
 import model.domain.User;
 
 public class MarketManager {
    //포트폴리오 가져와서 전체 수량, 가격 정리
-//   private List<Portfolio> portfolios = new ArrayList<>();
-   private static List<PortFolio>  portfolios = PortfolioDAO.getPortfolioDAO().getPortFolios();
    private static UserDAO userDAO = UserDAO.getModel();
    private static PortfolioDAO portfolioDAO = PortfolioDAO.getPortfolioDAO();
    
    void buyStock(Stock stock, int num){
 	   boolean found = false;
 	   
-	      for(PortFolio portfolio : portfolios){
+	      for(PortFolio portfolio : portfolioDAO.getPortFolios()){
 	    	if(portfolio.getSName().equals(stock.getSName())){
 	            int now_price = (portfolio.getPPrice()*portfolio.getPAmount() + stock.getSPrice()*num)/(portfolio.getPAmount() +num);
 	            portfolio.setPPrice(now_price);
@@ -41,8 +40,8 @@ public class MarketManager {
 	      }
    }
    boolean sellStock(Stock stock, int num) {
-	    for(PortFolio portfolio : portfolios) {
-	        if(portfolio.getPName().equals(stock.getSName())) {
+	    for(PortFolio portfolio : portfolioDAO.getPortFolios()) {
+	        if(portfolio.getSName().equals(stock.getSName())) {
 	            if(portfolio.getPAmount() < num) {
 	                System.out.println("판매할 개수가 보유량보다 클 수 없습니다.");
 	                return false;
@@ -51,7 +50,7 @@ public class MarketManager {
 	            // 수량 감소
 	            portfolio.setPAmount(portfolio.getPAmount() - num);
 	            if(portfolio.getPAmount() == 0) {
-	            	portfolios.remove(portfolio);
+	            	portfolioDAO.deletePortfolio(userDAO.getCurrentPlayer().getUName(), stock.getSName());
 	            }
 	            // 평균 단가는 매도 시 갱신하지 않음
 
@@ -62,7 +61,7 @@ public class MarketManager {
 	}
 
    public static int calculateTotalPortfolioValue() {
-       List<PortFolio> playerPortfolios = portfolios;
+       List<PortFolio> playerPortfolios = portfolioDAO.getPortFolios();
        int totalValue = 0;
        
        for (PortFolio portfolio : playerPortfolios) {
@@ -76,12 +75,12 @@ public class MarketManager {
        return totalValue;
    }
    public static int calculateTotalAsset() {
-       User currentPlayer = model.getCurrentPlayer();
-       return currentPlayer.getUWallet() + calculateTotalPortfolioValue();
+       User currentPlayer = userDAO.getCurrentPlayer();
+       return (int) (currentPlayer.getUWallet() + calculateTotalPortfolioValue());
    }
    
    public static List<PortFolio> showPortfolio(){
-	   return portfolios;
+	   return portfolioDAO.getPortFolios();
    }
    
 }

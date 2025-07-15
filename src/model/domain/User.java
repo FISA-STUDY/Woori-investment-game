@@ -26,6 +26,5 @@ public class User {
     public User(String uName, String uPassword) {
         this.uName = uName;
         this.uPassword = uPassword;
-        this.uWallet = uWallet;
     }
 }

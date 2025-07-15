@@ -1,6 +1,9 @@
 package model;
 
 import java.sql.*;
+import java.util.List;
+
+import model.domain.PortFolio;
 import model.domain.User;
 import util.DBUtil;
 
@@ -121,10 +124,8 @@ public class UserDAO {
         this.currentDay++;
     }
 
-	public Object getPortFolios() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+    public List<PortFolio> getPortFolios() {
+        return PortfolioDAO.getModel().getPortFolios();
+    }
 
 }

@@ -1,7 +1,9 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -42,6 +44,29 @@ public class StockDAO {
 		}
 		return all;
    }
+   
+	public static boolean updateStock(int sPrice, int sId, double sGraph) throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			
+			conn = DBUtil.getConnection();
+			pstmt = conn.prepareStatement("update Stock set s_price = ?, s_graph=? where s_id=?");
+		
+			pstmt.setInt(1, sPrice);
+			pstmt.setDouble(2, sGraph);
+			pstmt.setInt(3, sId); 
+			
+			int result = pstmt.executeUpdate();
+
+			if(result==1) {
+				return true;
+			}
+		}finally {
+			DBUtil.close(conn, pstmt);
+		}
+		return false;
+	}
    
    public Stock getOneRandomStock() throws Exception{
 	   Connection conn = null;

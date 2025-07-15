@@ -1,6 +1,7 @@
 package view;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -59,6 +60,7 @@ public class ConsoleUI {
                     String regPwd = scanner.nextLine();
 
                     if (userDAO.register(regId, regPwd)) {
+                        System.out.println();
                         printSuccess("회원가입 성공! 이제 로그인하세요.");
                         System.out.println();
                     } else {
@@ -457,7 +459,7 @@ public class ConsoleUI {
             
             int totalStockValue = 0;
             for (PortFolio portfolio : userDAO.getPortFolios()) {
-                String stockName = portfolio.getPName();
+                String stockName = portfolio.getSName();
                 int quantity = portfolio.getPAmount();
                 int buyPrice = portfolio.getPPrice();
                 
@@ -483,8 +485,11 @@ public class ConsoleUI {
         
         System.out.printf("  %-18s  %-12s  %-10s", "📈 종목명", "💰 평단가", "📦 수량");
         System.out.println();
-        userDAO.getPortFolios().forEach(p ->System.out.printf("  %-18s  %-12d  %-10d", p.getPName(),p.getPPrice(),p.getPAmount()));;
+        userDAO.getPortFolios().forEach(p ->System.out.printf("  %-18s  %-12d  %-10d", p.getSName(),p.getPPrice(),p.getPAmount()));;
         System.out.println();
+        for (PortFolio p : userDAO.getPortFolios()) {
+            System.out.printf("  %-18s  %-12d  %-10d%n", p.getSName(), p.getPPrice(), p.getPAmount());
+        }        System.out.println();
         System.out.println();
         printPrompt("계속하려면 Enter를 누르세요");
         scanner.nextLine();
@@ -500,7 +505,7 @@ public class ConsoleUI {
            
            for (var portfolio : userDAO.getPortFolios()) {
                if (portfolio.getPAmount() > 0) {
-                   System.out.println("  " + portfolio.getPName() + ": " + portfolio.getPAmount() + "주");
+                   System.out.println("  " + portfolio.getSName() + ": " + portfolio.getPAmount() + "주");
                    hasValidStocks = true;
                }
            }

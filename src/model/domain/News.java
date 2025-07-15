@@ -20,5 +20,6 @@ public class News {
     
     @NonNull
     private String nMessage;
+ 
     
 }
