@@ -6,16 +6,17 @@ import model.UserDAO;
 
 public class Main {
     public static void main(String[] args) {
-        try {
+    	try {
             UserDAO model = UserDAO.getModel();
 
-            User player = ConsoleUI.createPlayer();
+            // 로그인 또는 회원가입 메뉴
+            boolean loggedIn = false;
+            while (!loggedIn) {
+                loggedIn = ConsoleUI.loginMenu();
+            }
+
             int currentDay = 1;
-
-            System.out.println("\n=== 게임 시작 ===");
-
             ConsoleUI.printGameStatus(currentDay, model.getCurrentPlayer());
-
             ConsoleUI.displayUserInfo(model.getCurrentPlayer());
 
             boolean isGaming = true;
@@ -76,7 +77,7 @@ public class Main {
                         System.out.println("────────────────────────────────────────");
                         System.out.println("📅 플레이 일수: " + currentDay + "일");
                         System.out.println("👤 플레이어: " + model.getCurrentPlayer().getUName());
-                        System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getUWallet()));
+//                        System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getUWallet()));
                         System.out.println();
                         
                         isGaming = false;
@@ -100,7 +101,7 @@ public class Main {
 	                     System.out.println("────────────────────────────────────────");
 	                     System.out.println("📅 플레이 일수: " + currentDay + "일");
 	                     System.out.println("👤 플레이어: " + model.getCurrentPlayer().getUName());
-	                     System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getUWallet()));
+//	                     System.out.println("💰 최종 보유 자산: " + ConsoleUI.formatCurrency(model.getCurrentPlayer().getUWallet()));
 	                     System.out.println();
 	                     isGaming = false;
 	                     break;

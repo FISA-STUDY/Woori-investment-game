@@ -15,8 +15,7 @@ public class StockManager {
     private static MarketManager marketManager = new MarketManager();
     private static UserDAO model = UserDAO.getModel();
     
-    public static void priceChange(NewsStockPair newsStockPair){
-        try {
+    public static void priceChange(NewsStockPair newsStockPair) throws Exception{
 			for(Stock stock : stockDAO.getStock()) {
 			    double rate;
 			    
@@ -39,10 +38,6 @@ public class StockManager {
 			        stock.setSGraph(Math.abs(rate));
 			    }
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
     }
 //    
 //    public static boolean stockBuy(String stockName, int num) {
