@@ -28,10 +28,14 @@ public class NewsDAO {
          stmt=conn.createStatement();
          rs=stmt.executeQuery("select * from News ORDER BY RAND() limit 1");
          
-         
-         news = new News(rs.getInt("id"),
-         rs.getBoolean("n_isGood"),
-         rs.getString("n_message"));
+         if (rs.next()) { // 커서 이동 필수
+             news = new News(
+                 rs.getInt("id"),
+                 rs.getBoolean("n_isGood"),
+                 rs.getString("n_message")
+             );
+         }
+
       } catch (Exception e) {
          e.printStackTrace();
       }finally {
