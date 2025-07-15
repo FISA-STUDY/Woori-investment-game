@@ -27,16 +27,6 @@ public class NewsDAO {
          conn = DBUtil.getConnection();
          stmt=conn.createStatement();
          rs=stmt.executeQuery("select * from News ORDER BY RAND() limit 1");
-<<<<<<< HEAD
-          
-         if (rs.next()) {
-        	    news = new News(
-        	        rs.getInt("id"),
-        	        rs.getBoolean("n_isGood"),
-        	        rs.getString("n_message")
-        	    );
-        	}
-=======
          
          if (rs.next()) { // 커서 이동 필수
              news = new News(
@@ -45,7 +35,6 @@ public class NewsDAO {
                  rs.getString("n_message")
              );
          }
->>>>>>> eaea23d672206be528efb056ba27294c12b970c4
 
       } catch (Exception e) {
          e.printStackTrace();
