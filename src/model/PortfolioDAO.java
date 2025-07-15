@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.domain.PortFolio;
+import model.domain.User;
 import util.DBUtil;
 
 public class PortfolioDAO {
@@ -19,11 +20,20 @@ public class PortfolioDAO {
 
     private PortfolioDAO() {}
 	
-	public List<PortFolio> getPortFolios() {
+    private String getCurrentUserName() {
+    	User current = UserDAO.getModel().getCurrentPlayer();
+    	return (current != null) ? current.getUName() : null;
+    }
+    
+    public List<PortFolio> getPortFolios() {
+        String userName = getCurrentUserName();
+        List<PortFolio> portfolioList = new ArrayList<>();
+
+        if (userName == null) return portfolioList;
+		
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
-        List<PortFolio> portfolioList = new ArrayList<>();
 
         try {
             conn = DBUtil.getConnection();
@@ -51,39 +61,7 @@ public class PortfolioDAO {
         return portfolioList;
     }
 	
-	 public List<PortFolio> getPortFoliosByUser(String userName) {
-	        Connection conn = null;
-	        PreparedStatement pstmt = null;
-	        ResultSet rs = null;
-	        List<PortFolio> portfolioList = new ArrayList<>();
-
-	        try {
-	            conn = DBUtil.getConnection();
-	            String sql = "SELECT * FROM Portfolio WHERE user_name = ?";
-	            pstmt = conn.prepareStatement(sql);
-	            pstmt.setString(1, userName);
-
-	            rs = pstmt.executeQuery();
-
-	            while (rs.next()) {
-	                PortFolio pf = new PortFolio();
-	                pf.setPId(rs.getLong("p_id"));
-	                pf.setPPrice(rs.getInt("p_price"));
-	                pf.setPAmount(rs.getInt("p_amount"));
-	                pf.setUName(rs.getString("u_name"));
-	                pf.setSName(rs.getString("s_name"));
-	                pf.setSId(rs.getLong("s_id"));
-	                portfolioList.add(pf);
-	            }
-
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        } finally {
-	            DBUtil.close(conn, pstmt, rs);
-	        }
-
-	        return portfolioList;
-	    }
+	 
 	 public void insertPortfolio(PortFolio pf) {
 	        Connection conn = null;
 	        PreparedStatement pstmt = null;

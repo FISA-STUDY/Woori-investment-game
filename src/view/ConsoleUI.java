@@ -1,6 +1,7 @@
 package view;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -8,6 +9,7 @@ import controller.NewsGenerator;
 import controller.StockManager;
 import model.UserDAO;
 import model.domain.News;
+import model.domain.PortFolio;
 import model.domain.Stock;
 import model.domain.User;
 import model.dto.NewsStockPair;
@@ -450,15 +452,16 @@ public class ConsoleUI {
         System.out.println();
         
         // 포트폴리오 정보 표시
-        if (model.getPortFolios() != null && !model.getPortFolios().isEmpty()) {
+        List<PortFolio> portfolios = model.getPortFolios();
+        if (portfolios != null && !portfolios.isEmpty()) {
             System.out.println("📊 보유 주식:");
             System.out.println("╔════════════════════════════════════════════════════════════════╗");
             System.out.printf("  %-15s  %-8s  %-12s  %-12s%n", "종목명", "수량", "평단가", "현재가치");
             System.out.println("╠════════════════════════════════════════════════════════════════╣");
             
             int totalStockValue = 0;
-            for (var portfolio : model.getPortFolios()) {
-                String stockName = portfolio.getPName();
+            for (PortFolio portfolio : portfolios) {
+                String stockName = portfolio.getSName();
                 int quantity = portfolio.getPAmount();
                 int buyPrice = portfolio.getPPrice();
                 
@@ -484,8 +487,9 @@ public class ConsoleUI {
         
         System.out.printf("  %-18s  %-12s  %-10s", "📈 종목명", "💰 평단가", "📦 수량");
         System.out.println();
-        model.getPortFolios().forEach(p ->System.out.printf("  %-18s  %-12d  %-10d", p.getPName(),p.getPPrice(),p.getPAmount()));;
-        System.out.println();
+        for (PortFolio p : portfolios) {
+            System.out.printf("  %-18s  %-12d  %-10d%n", p.getSName(), p.getPPrice(), p.getPAmount());
+        }        System.out.println();
         System.out.println();
         printPrompt("계속하려면 Enter를 누르세요");
         scanner.nextLine();
