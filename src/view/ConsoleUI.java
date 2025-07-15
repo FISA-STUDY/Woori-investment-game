@@ -8,6 +8,7 @@ import controller.NewsGenerator;
 import controller.StockManager;
 import model.UserDAO;
 import model.domain.News;
+import model.domain.PortFolio;
 import model.domain.Stock;
 import model.domain.User;
 import model.dto.NewsStockPair;
@@ -15,11 +16,10 @@ import model.dto.NewsStockPair;
 public class ConsoleUI {
     private static Scanner scanner = new Scanner(System.in);
     private static final NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.KOREA);
-    private static UserDAO model = UserDAO.getModel();
+    private static UserDAO userDAO = UserDAO.getModel();
   
     public static User loginMenu() {
         Scanner scanner = new Scanner(System.in);
-        UserDAO model = UserDAO.getModel();
         
         while (true) {
             System.out.println("1. 로그인");
@@ -40,9 +40,9 @@ public class ConsoleUI {
                     printPrompt("비밀번호를 입력하세요");
                     String loginPwd = scanner.nextLine();
 
-                    if (model.login(loginId, loginPwd)) {
+                    if (userDAO.login(loginId, loginPwd)) {
                         printSuccess("로그인 성공!");
-                        return model.getCurrentPlayer(); // 로그인한 사용자 반환
+                        return userDAO.getCurrentPlayer(); // 로그인한 사용자 반환
                     } else {
                         printError("로그인 실패. 아이디 또는 비밀번호가 틀렸습니다.");
                     }
@@ -58,7 +58,7 @@ public class ConsoleUI {
                     printPrompt("비밀번호를 입력하세요");
                     String regPwd = scanner.nextLine();
 
-                    if (model.register(regId, regPwd)) {
+                    if (userDAO.register(regId, regPwd)) {
                         printSuccess("회원가입 성공! 이제 로그인하세요.");
                         System.out.println();
                     } else {
@@ -168,7 +168,7 @@ public class ConsoleUI {
         System.out.println("────────────────────────────────────────");
         
         // 현재 보유 자산 표시
-        User currentPlayer = model.getCurrentPlayer();
+        User currentPlayer = userDAO.getCurrentPlayer();
         if (currentPlayer == null) {
             printError("플레이어 정보를 불러올 수 없습니다.");
             return;
@@ -230,7 +230,7 @@ public class ConsoleUI {
 //                if (confirmTransaction("구매")) {
 //                    if(StockManager.stockBuy(tradeInfo.stockName, tradeInfo.quantity)) {
 //                        printSuccess("주식 구매가 완료되었습니다!");
-//                        System.out.println("잔여 자산: " + formatCurrency(model.getCurrentPlayer().getUWallet()));
+//                        System.out.println("잔여 자산: " + formatCurrency(userDAO.getCurrentPlayer().getUWallet()));
 //                        return;
 //                    } else {
 //                        printError("주식 구매에 실패했습니다.");
@@ -293,7 +293,7 @@ public class ConsoleUI {
 //                if (confirmTransaction("판매")) {
 //                    if(StockManager.stockSell(tradeInfo.stockName, tradeInfo.quantity)) {
 //                        printSuccess("주식 판매가 완료되었습니다!");
-//                        System.out.println("현재 자산: " + formatCurrency(model.getCurrentPlayer().getUWallet()));
+//                        System.out.println("현재 자산: " + formatCurrency(userDAO.getCurrentPlayer().getUWallet()));
 //                        return;
 //                    } else {
 //                        printError("주식 판매에 실패했습니다.");
@@ -394,7 +394,7 @@ public class ConsoleUI {
         
         try {
             // 1. 게임 날짜 증가
-            model.incrementDay();
+            userDAO.incrementDay();
             
             // 2. 뉴스 생성 및 주식 가격 변동 적용
             NewsGenerator newsGenerator = new NewsGenerator();
@@ -439,7 +439,7 @@ public class ConsoleUI {
         System.out.println("📈 포트폴리오");
         System.out.println("────────────────────────────────────────");
         
-        User currentPlayer = model.getCurrentPlayer();
+        User currentPlayer = userDAO.getCurrentPlayer();
         if (currentPlayer == null) {
             printError("플레이어 정보를 불러올 수 없습니다.");
             return;
@@ -449,14 +449,14 @@ public class ConsoleUI {
         System.out.println();
         
         // 포트폴리오 정보 표시
-        if (model.getPortFolios() != null && !model.getPortFolios().isEmpty()) {
+        if (userDAO.getPortFolios() != null && !userDAO.getPortFolios().isEmpty()) {
             System.out.println("📊 보유 주식:");
             System.out.println("╔════════════════════════════════════════════════════════════════╗");
             System.out.printf("  %-15s  %-8s  %-12s  %-12s%n", "종목명", "수량", "평단가", "현재가치");
             System.out.println("╠════════════════════════════════════════════════════════════════╣");
             
             int totalStockValue = 0;
-            for (var portfolio : model.getPortFolios()) {
+            for (PortFolio portfolio : userDAO.getPortFolios()) {
                 String stockName = portfolio.getPName();
                 int quantity = portfolio.getPAmount();
                 int buyPrice = portfolio.getPPrice();
@@ -483,7 +483,7 @@ public class ConsoleUI {
         
         System.out.printf("  %-18s  %-12s  %-10s", "📈 종목명", "💰 평단가", "📦 수량");
         System.out.println();
-        model.getPortFolios().forEach(p ->System.out.printf("  %-18s  %-12d  %-10d", p.getPName(),p.getPPrice(),p.getPAmount()));;
+        userDAO.getPortFolios().forEach(p ->System.out.printf("  %-18s  %-12d  %-10d", p.getPName(),p.getPPrice(),p.getPAmount()));;
         System.out.println();
         System.out.println();
         printPrompt("계속하려면 Enter를 누르세요");
@@ -494,11 +494,11 @@ public class ConsoleUI {
    private static void showPortfolioSummary() {
        System.out.println("💼 현재 보유 주식:");
        
-       if (model.getPortFolios() != null && !model.getPortFolios().isEmpty()) {
+       if (userDAO.getPortFolios() != null && !userDAO.getPortFolios().isEmpty()) {
            // ✅ 수량이 0보다 큰 주식만 필터링해서 표시
            boolean hasValidStocks = false;
            
-           for (var portfolio : model.getPortFolios()) {
+           for (var portfolio : userDAO.getPortFolios()) {
                if (portfolio.getPAmount() > 0) {
                    System.out.println("  " + portfolio.getPName() + ": " + portfolio.getPAmount() + "주");
                    hasValidStocks = true;
