@@ -11,8 +11,14 @@ import model.domain.User;
 
 public class MarketManager {
    //포트폴리오 가져와서 전체 수량, 가격 정리
+<<<<<<< HEAD
+//   private List<Portfolio> portfolios = new ArrayList<>();
+   private static UserDAO model = UserDAO.getModel();
+   
+=======
    private static UserDAO userDAO = UserDAO.getModel();
    private static PortfolioDAO portfolioDAO = PortfolioDAO.getPortfolioDAO();
+>>>>>>> 4136eab5c143647f40f2142499dcccbdfd90ffec
    
    void buyStock(Stock stock, int num){
 	   boolean found = false;
