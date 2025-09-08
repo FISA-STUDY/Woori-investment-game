@@ -164,8 +164,6 @@ Woori-investment-game/
  ┃ ┃ ┗ DBUtil.java
  ┃ ┗ view/
  ┃   ┗ ConsoleUI.java
- ┣ Dockerfile
- ┣ docker-compose.yml
  ┣ pom.xml
  ┗ README.md
 ```
